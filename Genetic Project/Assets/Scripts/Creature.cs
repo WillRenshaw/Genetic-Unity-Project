@@ -1,14 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[System.Serializable]
 public class Creature{
     private string name;
     public string NAME
     {
         get { return name; }
     }
-
     private int id;
     public int ID
     {
@@ -22,10 +21,10 @@ public class Creature{
     }
 
 
-    public Function RHF = new Function();
-    public Function LHF = new Function();
-    public Function RKF = new Function();
-    public Function LKF = new Function();
+    public Function RHF = new Function(0, 1, 1, 0);
+    public Function LHF = new Function(0, 1, 1, 0);
+    public Function RKF = new Function(0, 1, 1, 0);
+    public Function LKF = new Function(0, 1, 1, 0);
 
     public float bodyLength = 5f;
     public float RUpperLegLength = 2f;
