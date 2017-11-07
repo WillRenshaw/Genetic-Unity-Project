@@ -21,10 +21,10 @@ public class Creature{
     }
 
 
-    public Function RHF = new Function(0, 1, 1, 0);
-    public Function LHF = new Function(0, 1, 1, 0);
-    public Function RKF = new Function(0, 1, 1, 0);
-    public Function LKF = new Function(0, 1, 1, 0);
+    public Function RHF = new Function(0, 50, 1, 0);
+    public Function LHF = new Function(0, 20, 3, 0);
+    public Function RKF = new Function(0, 30, 0.000000000000001f, 0);
+    public Function LKF = new Function(0, 100, 5, 0);
 
     public float bodyLength = 5f;
     public float RUpperLegLength = 2f;

@@ -71,6 +71,14 @@ public class CreatureController : MonoBehaviour {
 
     void Start()
     {
-        BuildCreature();
+        BuildCreature();//Test
+		genes = new Creature ("Subject 1", 1, 1);
     }
+
+	void FixedUpdate(){
+		rightHip.transform.localRotation = Quaternion.AngleAxis (genes.RHF.GetValue (Time.time), Vector3.forward);
+		leftHip.transform.localRotation = Quaternion.AngleAxis (genes.LHF.GetValue (Time.time), Vector3.forward);
+		rightKnee.transform.localRotation = Quaternion.AngleAxis (genes.RKF.GetValue (Time.time), Vector3.forward);
+		leftKnee.transform.localRotation = Quaternion.AngleAxis (genes.LKF.GetValue (Time.time), Vector3.forward);
+	}
 }
