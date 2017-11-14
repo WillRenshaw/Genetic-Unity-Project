@@ -16,6 +16,12 @@ public class CreatureController : MonoBehaviour {
     GameObject rightKnee;
     GameObject leftKnee;
 
+	public bool running = false;
+	public bool testXAxis = false;
+	public bool testYAxis = false;
+	float maxY = 0f;
+
+
     public void BuildCreature()
     {
         //CreateBody
@@ -73,12 +79,25 @@ public class CreatureController : MonoBehaviour {
     {
         BuildCreature();//Test
 		genes = new Creature ("Subject 1", 1, 1);
+		running = true;
+		testXAxis = true;
     }
 
 	void FixedUpdate(){
-		rightHip.transform.localRotation = Quaternion.AngleAxis (genes.RHF.GetValue (Time.time), Vector3.forward);
-		leftHip.transform.localRotation = Quaternion.AngleAxis (genes.LHF.GetValue (Time.time), Vector3.forward);
-		rightKnee.transform.localRotation = Quaternion.AngleAxis (genes.RKF.GetValue (Time.time), Vector3.forward);
-		leftKnee.transform.localRotation = Quaternion.AngleAxis (genes.LKF.GetValue (Time.time), Vector3.forward);
+		if (running) {
+			rightHip.transform.localRotation = Quaternion.AngleAxis (genes.RHF.GetValue (Time.time), Vector3.forward);
+			leftHip.transform.localRotation = Quaternion.AngleAxis (genes.LHF.GetValue (Time.time), Vector3.forward);
+			rightKnee.transform.localRotation = Quaternion.AngleAxis (genes.RKF.GetValue (Time.time), Vector3.forward);
+			leftKnee.transform.localRotation = Quaternion.AngleAxis (genes.LKF.GetValue (Time.time), Vector3.forward);
+
+			genes.fitness = 0;
+			if(testXAxis){
+				genes.fitness += Mathf.Abs (transform.position.x);
+			}
+			if (testYAxis && transform.position.y > maxY) {
+				maxY = transform.position.y;
+			}
+			genes.fitness += maxY;
+		}
 	}
 }
