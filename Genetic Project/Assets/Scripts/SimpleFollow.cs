@@ -8,6 +8,6 @@ public class SimpleFollow : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		this.transform.position = target.transform.position;
+		transform.position = target.transform.position;
 	}
 }

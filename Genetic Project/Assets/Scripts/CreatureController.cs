@@ -76,14 +76,7 @@ public class CreatureController : MonoBehaviour {
         leftLowerLeg.transform.localScale = new Vector3(1, genes.LLowerLegLength, 1);
         leftLowerLeg.transform.localPosition = new Vector3(0, -genes.LLowerLegLength, 0);
     }
-
-    void Start()
-    {
-        BuildCreature();//Test
-		genes = new Creature ("Subject 1", 1, 1);
-		running = true;
-		testXAxis = true;
-    }
+		
 
 	void FixedUpdate(){
 		if (running) {
@@ -97,10 +90,14 @@ public class CreatureController : MonoBehaviour {
 				genes.fitness += Mathf.Abs (transform.position.x);
 			}
 			if (testYAxis && transform.position.y > maxY) {
-				maxY = transform.position.y;
+				maxY = transform.localPosition.y;
 			}
 			genes.fitness += maxY;
 			tagUI.text = genes.NAME + "\nFitness: " + (int)genes.fitness;
 		}
+	}
+
+	void Start(){
+		BuildCreature ();
 	}
 }
