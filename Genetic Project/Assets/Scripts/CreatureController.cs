@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CreatureController : MonoBehaviour {
 
@@ -21,6 +22,7 @@ public class CreatureController : MonoBehaviour {
 	public bool testYAxis = false;
 	float maxY = 0f;
 
+	public Text tagUI;
 
     public void BuildCreature()
     {
@@ -98,6 +100,7 @@ public class CreatureController : MonoBehaviour {
 				maxY = transform.position.y;
 			}
 			genes.fitness += maxY;
+			tagUI.text = genes.NAME + "\nFitness: " + (int)genes.fitness;
 		}
 	}
 }
