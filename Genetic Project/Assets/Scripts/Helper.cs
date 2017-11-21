@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public static class Helper{
-
-
 	private static int partition(List<Creature> A, int lo, int hi){
 		int i = lo - 1;
 		Creature pivot = A [hi];
@@ -23,9 +21,8 @@ public static class Helper{
 		}
 		return i + 1;
 	}
-
 	/// <summary>
-	/// Quicksort the list into ascending order
+	/// Quicksort the list of Creatures into ascending order
 	/// </summary>
 	/// <param name="A">The List to be sorted.</param>
 	/// <param name="lo">The first index to be sorted.</param>
@@ -38,4 +35,13 @@ public static class Helper{
 		}
 	}
 
+
+    public static float GaussianSample (float mean, float std)
+    {
+        float u1 = 1 - Random.Range(0f, 1f);
+        float u2 = 1 - Random.Range(0f, 1f);
+        float z = Mathf.Sqrt(-2 * Mathf.Log(u1)) * Mathf.Cos(2 * Mathf.PI * u2);
+        float u = mean + (std * z);
+        return u;
+    }
 }

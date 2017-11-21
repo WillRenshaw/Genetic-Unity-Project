@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class GenerationController : MonoBehaviour {
 	public Generation currentGen;
 	public GameObject ecosystem;
@@ -11,15 +12,15 @@ public class GenerationController : MonoBehaviour {
 	public bool testYAxis = false;
 
 	void StartSimulation(){
-		print ("START SIMULATION");
+		Debug.Log ("STARTED SIMULATION AT: " + Time.time);
 		int i = 0;
 		foreach (Creature c in currentGen.population) {
-			GameObject a = Instantiate (ecosystem);
-			a.name = "Ecosystem " + i;
-			a.transform.parent = this.transform;
-			a.transform.position = new Vector3(0,i * 20,0);
-			CreatureController cc = a.GetComponentInChildren<CreatureController> ();
-			cc.genes = c;
+			GameObject eco = Instantiate (ecosystem);
+			eco.name = "Ecosystem " + i;
+			eco.transform.parent = this.transform;
+			eco.transform.position = new Vector3(0,i * 20,0);
+			CreatureController cc = eco.GetComponentInChildren<CreatureController> ();
+            cc.genes = c;
 			cc.running = true;
 			cc.testXAxis = testXAxis;
 			cc.testYAxis = testYAxis;
@@ -28,7 +29,7 @@ public class GenerationController : MonoBehaviour {
 	}
 
 	void EndSimulation(){
-		print ("END SIMULATION");
+        Debug.Log("ENDED SIMULATION AT: " + Time.time);
 		for (int i = 0; i < transform.childCount; i++) {
 			transform.GetChild (i).GetComponentInChildren<CreatureController> ().running = false;
 			Creature c = transform.GetChild (i).GetComponentInChildren<CreatureController>().genes;
@@ -37,38 +38,26 @@ public class GenerationController : MonoBehaviour {
 	}
 
 	void Start(){
-		Generation g = new Generation (1);
-		Creature a = new Creature ("Mark", 1, 1);
-		a.RHF = new Function (1, 30, 2, 0);
-		a.LHF = new Function (0, 30, 2, 9);
-		g.population.Add (a);
-		Creature b = new Creature ("Alan", 1, 1);
-		g.population.Add (b);
-		Creature c = new Creature ("Keith", 1, 1);
-		g.population.Add (c);
+        //Generation g = new Generation (1);
+        //Creature a = new Creature ("TestCreature", g.genNumber, 1);
+        // g.population.Add(a);
+        //currentGen = g;
+        //StartCoroutine (RunSimulation());
 
-
-		currentGen = g;
-		StartCoroutine (RunSimulation());
-
+        float mean = 5f;
+        float std = 3f;
+        for (int i = 0; i < 10; i++)
+        {
+            print(Helper.GaussianSample(mean, std));
+        }
 	}
 
 	IEnumerator RunSimulation(){
-		
 		StartSimulation ();
 		yield return new WaitForSeconds (simulationLength);
-		print ("END");
 		EndSimulation ();
 		currentGen.tested = true;
-		foreach (Creature creature in currentGen.population) {
-			print (creature.fitness);
-		}
 		Helper.quicksort (currentGen.population, 0, currentGen.population.Count - 1);
 		currentGen.sorted = true;
-		print ("SORTED");
-		foreach (Creature creature in currentGen.population) {
-			print (creature.fitness);
-		}
-
 	}
 }
