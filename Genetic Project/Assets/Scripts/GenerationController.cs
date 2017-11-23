@@ -38,18 +38,20 @@ public class GenerationController : MonoBehaviour {
 	}
 
 	void Start(){
-        //Generation g = new Generation (1);
-        //Creature a = new Creature ("TestCreature", g.genNumber, 1);
-        // g.population.Add(a);
-        //currentGen = g;
-        //StartCoroutine (RunSimulation());
-
-        float mean = 5f;
-        float std = 3f;
-        for (int i = 0; i < 10; i++)
+        Generation g = new Generation (1);
+        //Creature a = new Creature ("Test", g.genNumber, 1);
+        //a.RHF = new SinWave(10, 1f, 4);
+        // a.LKF = new TriangleWave(90, 2f, 0);
+        for (int i = 0; i < 100; i++)
         {
-            print(Helper.GaussianSample(mean, std));
+            Creature a = Helper.CreateRandomCreature(1, 1);
+            g.population.Add(a);
         }
+
+        Helper.WriteGeneration(g);
+        Helper.ReadGenerations();
+        currentGen = Helper.savedGenerations[0];
+        StartCoroutine (RunSimulation());
 	}
 
 	IEnumerator RunSimulation(){
@@ -59,5 +61,9 @@ public class GenerationController : MonoBehaviour {
 		currentGen.tested = true;
 		Helper.quicksort (currentGen.population, 0, currentGen.population.Count - 1);
 		currentGen.sorted = true;
+        //Get Best 3
+        //Store Current Gen
+        //Create New Gen
+        //Call Self
 	}
 }
