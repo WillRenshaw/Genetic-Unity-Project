@@ -40,7 +40,12 @@ public static class Helper{
 		}
 	}
 
-
+    /// <summary>
+    /// Returns a random number that tends to the given mean
+    /// </summary>
+    /// <param name="mean">The mean of the ND</param>
+    /// <param name="std">The standard deviation of the ND</param>
+    /// <returns>Returns a normally distributed number</returns>
     public static float GaussianSample (float mean, float std)
     {
         float u1 = 1 - Random.Range(0f, 1f);
@@ -115,10 +120,6 @@ public static class Helper{
         c.LUpperLegLength = Mathf.Clamp(GaussianSample(2, 1), 0.00001f, 100f);
         c.RLowerLegLength = Mathf.Clamp(GaussianSample(1, 0.5f), 0.00001f, 100f);
         c.LLowerLegLength = Mathf.Clamp(GaussianSample(1, 0.5f), 0.00001f, 100f);
-
-
-
-       
 
         return c;
     }
