@@ -20,6 +20,7 @@ public class CreatureController : MonoBehaviour {
 	public bool running = false;
 	public bool testXAxis = false;
 	public bool testYAxis = false;
+
 	float maxY = 0f;
 
 	public Text tagUI;
@@ -89,7 +90,7 @@ public class CreatureController : MonoBehaviour {
 			if(testXAxis){
 				genes.fitness += Mathf.Abs (transform.position.x);
 			}
-			if (testYAxis && transform.position.y > maxY) {
+			if (testYAxis && transform.localPosition.y > maxY) {
 				maxY = transform.localPosition.y;
 			}
 			genes.fitness += maxY;

@@ -7,9 +7,11 @@ public class GenerationController : MonoBehaviour {
 	public Generation currentGen;
 	public GameObject ecosystem;
 
+
+	[Range(0f, 100f)]
 	public float simulationLength = 10f;
-	public bool testXAxis = false;
-	public bool testYAxis = false;
+	public bool XAxis = false;
+	public bool YAxis = false;
 
 	void StartSimulation(){
 		Debug.Log ("STARTED SIMULATION AT: " + Time.time);
@@ -18,12 +20,12 @@ public class GenerationController : MonoBehaviour {
 			GameObject eco = Instantiate (ecosystem);
 			eco.name = "Ecosystem " + i;
 			eco.transform.parent = this.transform;
-			eco.transform.position = new Vector3(0,i * 20,0);
+			eco.transform.position = new Vector3(0,i * 50,0);
 			CreatureController cc = eco.GetComponentInChildren<CreatureController> ();
             cc.genes = c;
 			cc.running = true;
-			cc.testXAxis = testXAxis;
-			cc.testYAxis = testYAxis;
+			cc.testXAxis = XAxis;
+			cc.testYAxis = YAxis;
 			i++;
 		}
 	}
@@ -38,13 +40,19 @@ public class GenerationController : MonoBehaviour {
 	}
 
 	void Start(){
+		Helper.userPrefs = new UserPrefs () {
+			initialBodyCV = 1,
+			furtherBodyCV = 1,
+			initialFunctionCV = 1,
+			furtherFunctionCV = 1
+		};
+		Helper.WriteToFile ("/userPrefs.gd", Helper.userPrefs);
+		Helper.userPrefs = (UserPrefs)Helper.ReadData ("/userPrefs.gd");
+
         Generation g = new Generation (1);
-        //Creature a = new Creature ("Test", g.genNumber, 1);
-        //a.RHF = new SinWave(10, 1f, 4);
-        // a.LKF = new TriangleWave(90, 2f, 0);
         for (int i = 0; i < 100; i++)
         {
-            Creature a = Helper.CreateRandomCreature(1, 1);
+			Creature a = Helper.CreateRandomCreature(g.genNumber, i);
             g.population.Add(a);
         }
 
