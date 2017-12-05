@@ -50,11 +50,16 @@ public class GenerationController : MonoBehaviour {
 		Helper.userPrefs = (UserPrefs)Helper.ReadData ("/userPrefs.gd");
 
         Generation g = new Generation (1);
-        for (int i = 0; i < 100; i++)
-        {
-			Creature a = Helper.CreateRandomCreature(g.genNumber, i);
-            g.population.Add(a);
-        }
+        
+		Creature c1 = new Creature("c1", 1, 1);
+		Creature c2 = new Creature("c2", 1, 2);
+		g.population.Add(c1);
+		g.population.Add(c2);
+		for (int i = 0; i < 100; i++) {
+			Creature c3 = Helper.MateCreatures (c1, c2, g.genNumber, i + 3);
+			g.population.Add(c3);
+		}
+        
 
         Helper.WriteGeneration(g);
         Helper.ReadGenerations();

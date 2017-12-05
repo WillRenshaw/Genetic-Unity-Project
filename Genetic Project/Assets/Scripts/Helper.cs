@@ -90,18 +90,23 @@ public static class Helper{
 		return null;
 	}
 
-	private static float RandomFunctionValue(){
-		return Mathf.Clamp (GaussianSample (50, 50 * (float)userPrefs.initialFunctionCV), 0.1f, 200f);
+	private static float RandomFunctionValue(float mean = 50f){
+		return Mathf.Clamp (GaussianSample (mean, mean * (float)userPrefs.initialFunctionCV), 0.1f, 200f);
 	}
 
-	private static float RandomBodyValue(float mean){
+	private static float RandomBodyValue(float mean = 5f){
 		return Mathf.Clamp (GaussianSample (mean,mean * (float)userPrefs.initialBodyCV), 0.2f, 10f);
+	}
+
+	private static string GetRandomName(){
+		string[] names = File.ReadAllLines(Application.dataPath + "/Prefabs/names.txt");
+		return names [Random.RandomRange (0, names.Length - 1)];
 	}
 
     public static Creature CreateRandomCreature(int gen, int ID)
     {
-        string[] names = File.ReadAllLines(Application.dataPath + "/Prefabs/names.txt");
-        Creature c = new Creature(names[Random.RandomRange(0, names.Length - 1)], gen, ID);
+        
+		Creature c = new Creature(GetRandomName(), gen, ID);
         if(Random.Range(1,100) % 2 == 0)
         {
 			c.RHF = new SinWave(RandomFunctionValue(), RandomFunctionValue(), Random.Range(0, 360));
@@ -135,7 +140,7 @@ public static class Helper{
 			c.LKF = new TriangleWave(RandomFunctionValue(), RandomFunctionValue(), Random.Range(0, 360));
         }
 
-		c.bodyLength = RandomBodyValue (5);
+		c.bodyLength = RandomBodyValue ();
 		c.RUpperLegLength = RandomBodyValue (2);
 		c.LUpperLegLength = RandomBodyValue (2);
 		c.RLowerLegLength = RandomBodyValue (1);
@@ -146,7 +151,41 @@ public static class Helper{
 
     }
 
+	private static Function MateFunction(Function f1, Function f2){
+		Function f;
+		float typeMean = 50;
+		if (f1.GetType () == typeof(TriangleWave)) {
+			typeMean -= 20;
+		} else {
+			typeMean += 20;
+		}
+		if (f2.GetType () == typeof(TriangleWave)) {
+			typeMean -= 20;
+		} else {
+			typeMean += 20;
+		}
+		if (GaussianSample (typeMean, 30f) <= 50) {
+			f = new TriangleWave (GaussianSample ((f1.GetAmplitude() + f2.GetAmplitude()) / 2, Mathf.Abs (f1.GetAmplitude() - f2.GetAmplitude())), GaussianSample ((f1.GetWavelength() + f2.GetWavelength()) / 2, Mathf.Abs (f1.GetWavelength() - f2.GetWavelength())), GaussianSample ((f1.GetPhase() + f2.GetPhase()) / 2, Mathf.Abs (f1.GetPhase() - f2.GetPhase())));
+		} else {
+			f = new SinWave (GaussianSample ((f1.GetAmplitude() + f2.GetAmplitude()) / 2, Mathf.Abs (f1.GetAmplitude() - f2.GetAmplitude())), GaussianSample ((f1.GetWavelength() + f2.GetWavelength()) / 2, Mathf.Abs (f1.GetWavelength() - f2.GetWavelength())), GaussianSample ((f1.GetPhase() + f2.GetPhase()) / 2, Mathf.Abs (f1.GetPhase() - f2.GetPhase())));
+		}
 
+		return f;
+	}
+
+	public static Creature MateCreatures(Creature c1, Creature c2, int gen, int ID){
+		Creature child = new Creature (GetRandomName(), gen, ID);
+		child.RHF = MateFunction (c1.RHF, c2.RHF);
+		child.LHF = MateFunction (c1.LHF, c2.LHF);
+		child.RKF = MateFunction (c1.RKF, c2.RKF);
+		child.LKF = MateFunction (c1.LKF, c2.LKF);
+		child.bodyLength = GaussianSample ((c1.bodyLength + c2.bodyLength) / 2, Mathf.Abs (c1.bodyLength - c2.bodyLength));
+		child.RUpperLegLength = GaussianSample ((c1.RUpperLegLength + c2.RUpperLegLength) / 2, Mathf.Abs (c1.RUpperLegLength - c2.RUpperLegLength));
+		child.LUpperLegLength = GaussianSample ((c1.LUpperLegLength + c2.LUpperLegLength) / 2, Mathf.Abs (c1.LUpperLegLength - c2.LUpperLegLength));
+		child.RLowerLegLength = GaussianSample ((c1.RLowerLegLength + c2.RLowerLegLength) / 2, Mathf.Abs (c1.RLowerLegLength - c2.RLowerLegLength));
+		child.LLowerLegLength = GaussianSample ((c1.LLowerLegLength + c2.LLowerLegLength) / 2, Mathf.Abs (c1.LLowerLegLength - c2.LLowerLegLength));
+		return child;
+	}
 }
 
 [System.Serializable]

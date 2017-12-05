@@ -25,4 +25,14 @@ public class Function {
     {
         return 0;
     }
+
+	public float GetAmplitude(){
+		return amplitude;
+	}
+	public float GetWavelength(){
+		return wavelength;
+	}
+	public float GetPhase(){
+		return phase;
+	}
 }
