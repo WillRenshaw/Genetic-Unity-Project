@@ -103,6 +103,12 @@ public static class Helper{
 		return names [Random.RandomRange (0, names.Length - 1)];
 	}
 
+    /// <summary>
+    /// Creates a random creature
+    /// </summary>
+    /// <param name="gen">The gen number of the creature</param>
+    /// <param name="ID">The ID num of the creature</param>
+    /// <returns></returns>
     public static Creature CreateRandomCreature(int gen, int ID)
     {
         
@@ -151,6 +157,12 @@ public static class Helper{
 
     }
 
+    /// <summary>
+    /// Combines two functions
+    /// </summary>
+    /// <param name="f1">First Function</param>
+    /// <param name="f2">Second Function</param>
+    /// <returns></returns>
 	private static Function MateFunction(Function f1, Function f2){
 		Function f;
 		float typeMean = 50;
@@ -173,6 +185,14 @@ public static class Helper{
 		return f;
 	}
 
+    /// <summary>
+    /// Combines two creatures and returns a child with their properties
+    /// </summary>
+    /// <param name="c1">First Creature</param>
+    /// <param name="c2">Second Creature</param>
+    /// <param name="gen">The child creature's generation num</param>
+    /// <param name="ID">The child creature's ID num</param>
+    /// <returns></returns>
 	public static Creature MateCreatures(Creature c1, Creature c2, int gen, int ID){
 		Creature child = new Creature (GetRandomName(), gen, ID);
 		child.RHF = MateFunction (c1.RHF, c2.RHF);
