@@ -14,8 +14,7 @@ public class CreatureController : MonoBehaviour {
     const float jointOffset = 0.2f;
     GameObject rightHip;
     GameObject leftHip;
-    GameObject rightKnee;
-    GameObject leftKnee;
+
 
 	public bool running = false;
 	public bool testXAxis = false;
@@ -48,15 +47,7 @@ public class CreatureController : MonoBehaviour {
         rightUpperLeg.transform.localScale = new Vector3(1, genes.GetRUpperLegLength(), 1);
         rightUpperLeg.transform.localPosition = new Vector3(0, -genes.GetRUpperLegLength(), 0);
 
-        rightKnee = new GameObject("Right Knee"); //Make Right Knee
-        rightKnee.transform.parent = rightHip.transform;
-        rightKnee.transform.localPosition = new Vector3(0, -(2 * genes.GetRUpperLegLength() - jointOffset), 0);
-        GameObject rightLowerLeg = Instantiate(rightPreset);
-
-        rightLowerLeg.name = "Right Lower Leg"; //Make Right Lower Leg
-        rightLowerLeg.transform.parent = rightKnee.transform;
-        rightLowerLeg.transform.localScale = new Vector3(1, genes.GetRLowerLegLength(), 1);
-        rightLowerLeg.transform.localPosition = new Vector3(0, -genes.GetRLowerLegLength(), 0);
+        
 
         //Create Left Side
         leftHip = new GameObject("Left Hip"); //Make left Hip
@@ -69,15 +60,6 @@ public class CreatureController : MonoBehaviour {
         leftUpperLeg.transform.localScale = new Vector3(1, genes.GetLUpperLegLength(), 1);
         leftUpperLeg.transform.localPosition = new Vector3(0, -genes.GetLUpperLegLength(), 0);
 
-        leftKnee = new GameObject("Left Knee"); //Make left Knee
-        leftKnee.transform.parent = leftHip.transform;
-        leftKnee.transform.localPosition = new Vector3(0, -(2 * genes.GetLUpperLegLength() - jointOffset), 0);
-        GameObject leftLowerLeg = Instantiate(leftPreset);
-
-        leftLowerLeg.name = "Left Lower Leg"; //Make left Lower Leg
-        leftLowerLeg.transform.parent = leftKnee.transform;
-        leftLowerLeg.transform.localScale = new Vector3(1, genes.GetLLowerLegLength(), 1);
-        leftLowerLeg.transform.localPosition = new Vector3(0, -genes.GetLLowerLegLength(), 0);
     }
 		
 
@@ -85,8 +67,7 @@ public class CreatureController : MonoBehaviour {
 		if (running) {
 			rightHip.transform.localRotation = Quaternion.AngleAxis (genes.GetRHF().GetValue (Time.time), Vector3.forward);
 			leftHip.transform.localRotation = Quaternion.AngleAxis (genes.GetLHF().GetValue (Time.time), Vector3.forward);
-			rightKnee.transform.localRotation = Quaternion.AngleAxis (genes.GetRKF().GetValue (Time.time), Vector3.forward);
-			leftKnee.transform.localRotation = Quaternion.AngleAxis (genes.GetLKF().GetValue (Time.time), Vector3.forward);
+			
             if(transform.localPosition.y < 0)
             {
                 transform.Translate(new Vector3(0, -(transform.localPosition.y - 3), 0));
@@ -110,24 +91,34 @@ public class CreatureController : MonoBehaviour {
 
 
 			genes.SetFitness(0);
-            if (Mathf.Abs(this.transform.rotation.eulerAngles.z) > 90f)
+            if (Mathf.Abs(this.transform.rotation.eulerAngles.z) > 100f)
             {
+                
                 inverted = true;
             }
+           //else
+           //{
+            //   inverted = false;
+           // }
             if (testXAxis){
-				genes.SetFitness( genes.GetFitness() + transform.position.x);
+				genes.SetFitness( genes.GetFitness() + Mathf.Pow(transform.position.x, 2));
+                if(transform.position.x < 0)
+                {
+                    genes.SetFitness(genes.GetFitness() * -1);
+                }
 			}
 			if (testYAxis && transform.localPosition.y > maxY) {
 				maxY = transform.localPosition.y;
 			}
+            
+
+            
+            genes.SetFitness(genes.GetFitness() + maxY);
             if (inverted)
             {
                 genes.SetFitness(genes.GetFitness() * 0.5f);
             }
-
-            
-            genes.SetFitness(genes.GetFitness() + maxY);
-			tagUI.text = genes.NAME + "\nFitness: " + (int)genes.GetFitness();
+            tagUI.text = genes.NAME + "\nFitness: " + (int)genes.GetFitness();
 		}
 	}
 

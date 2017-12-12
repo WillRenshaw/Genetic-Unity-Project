@@ -23,14 +23,11 @@ public class Creature{
 
     private Function RHF = new SinWave(1, 1, 0);
     private Function LHF = new SinWave(1, 1, 0);
-    private Function RKF = new SinWave(1, 1, 0);
-    private Function LKF = new SinWave(1, 1, 0);
+
 
     private float bodyLength = 5f;
     private float RUpperLegLength = 2f;
     private float LUpperLegLength = 2f;
-    private float RLowerLegLength = 1f;
-    private float LLowerLegLength = 1f;
 
     private float fitness = 0f;
 
@@ -67,23 +64,7 @@ public class Creature{
     {
         LUpperLegLength = l;
     }
-    public float GetRLowerLegLength()
-    {
-        return RLowerLegLength;
-    }
-    public void SetRLowerLegLength(float l)
-    {
-        RLowerLegLength = l;
-    }
-
-    public float GetLLowerLegLength()
-    {
-        return LLowerLegLength;
-    }
-    public void SetLLowerLegLength(float l)
-    {
-        LLowerLegLength = l;
-    }
+   
 
     public Function GetRHF()
     {
@@ -103,23 +84,7 @@ public class Creature{
         LHF = f;
     }
 
-    public Function GetRKF()
-    {
-        return (RKF);
-    }
-    public void SetRKF(Function f)
-    {
-        RKF = f;
-    }
-
-    public Function GetLKF()
-    {
-        return (LKF);
-    }
-    public void SetLKF(Function f)
-    {
-        LKF = f;
-    }
+   
 
     public float GetFitness()
     {

@@ -130,28 +130,12 @@ public static class Helper{
         {
 			c.SetLHF(new TriangleWave(RandomFunctionValue(), RandomFunctionValue(), Random.Range(0, 360)));
         }
-        if (Random.Range(1, 100) % 2 == 0)
-        {
-			c.SetRKF(new SinWave(RandomFunctionValue(), RandomFunctionValue(), Random.Range(0, 360)));
-        }
-        else
-        {
-			c.SetRKF(new TriangleWave(RandomFunctionValue(), RandomFunctionValue(), Random.Range(0, 360)));
-        }
-        if (Random.Range(1, 100) % 2 == 0)
-        {
-			c.SetLKF(new SinWave(RandomFunctionValue(), RandomFunctionValue(), Random.Range(0, 360)));
-        }
-        else
-        {
-			c.SetLKF(new TriangleWave(RandomFunctionValue(), RandomFunctionValue(), Random.Range(0, 360)));
-        }
+
 
 		c.SetBodyLength(RandomBodyValue (4));
 		c.SetRUpperLegLength(RandomBodyValue (2));
 		c.SetLUpperLegLength(RandomBodyValue (2));
-		c.SetRLowerLegLength(RandomBodyValue (1));
-		c.SetLLowerLegLength(RandomBodyValue (1));
+
 
         return c;
 
@@ -198,13 +182,10 @@ public static class Helper{
 		Creature child = new Creature (GetRandomName(), gen, ID);
 		child.SetRHF(MateFunction(c1.GetRHF(), c2.GetRHF()));
 		child.SetLHF(MateFunction (c1.GetLHF(), c2.GetLHF()));
-		child.SetRKF(MateFunction (c1.GetRKF(), c2.GetRKF()));
-		child.SetLKF(MateFunction (c1.GetLKF(), c2.GetLKF()));
+		
         child.SetBodyLength(Mathf.Clamp(GaussianSample((c1.GetBodyLength() + c2.GetBodyLength()) / 2, Mathf.Abs(c1.GetBodyLength() - c2.GetBodyLength())), 0.1f, 6f));
 		child.SetRUpperLegLength(Mathf.Clamp(GaussianSample ((c1.GetRUpperLegLength() + c2.GetRUpperLegLength()) / 2, Mathf.Abs (c1.GetRUpperLegLength() - c2.GetRUpperLegLength())), 0.1f, 3f));
 		child.SetLUpperLegLength(Mathf.Clamp(GaussianSample ((c1.GetLUpperLegLength() + c2.GetLUpperLegLength()) / 2, Mathf.Abs (c1.GetLUpperLegLength() - c2.GetLUpperLegLength())), 0.1f, 3f));
-		child.SetRLowerLegLength(Mathf.Clamp(GaussianSample ((c1.GetRLowerLegLength() + c2.GetRLowerLegLength()) / 2, Mathf.Abs (c1.GetRLowerLegLength() - c2.GetRLowerLegLength())), 0.1f, 3f));
-		child.SetLLowerLegLength(Mathf.Clamp(GaussianSample ((c1.GetLLowerLegLength() + c2.GetLLowerLegLength()) / 2, Mathf.Abs (c1.GetLLowerLegLength() - c2.GetLLowerLegLength())), 0.1f, 3f));
 		return child;
 	}
 }

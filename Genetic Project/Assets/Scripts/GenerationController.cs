@@ -66,7 +66,7 @@ public class GenerationController : MonoBehaviour {
 
         g.AppendCreature(c1);
 		g.AppendCreature(c2);
-		for (int i = 0; i < 48; i++) {
+		for (int i = 0; i < 198; i++) {
 			Creature c3 = Helper.MateCreatures (c1, c2, g.GENNUMBER, i + 3);
 			g.AppendCreature(c3);
 		}
@@ -98,7 +98,7 @@ public class GenerationController : MonoBehaviour {
         print(currentGen.GetPopulation()[2].GetFitness());
 
         genUI.text = ("Gen: " + (currentGen.GENNUMBER + 1) +"\nPrevious Mean Fitness: " + (int)currentGen.MEANFITNESS);
-        currentGen = CreateNewGeneration(50, parents, currentGen.GENNUMBER + 1);
+        currentGen = CreateNewGeneration(200, parents, currentGen.GENNUMBER + 1);
         StartCoroutine(RunSimulation());
     }
 
