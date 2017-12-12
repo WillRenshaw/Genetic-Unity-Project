@@ -49,6 +49,7 @@ public static class Helper{
     /// <returns>Returns a normally distributed number</returns>
     public static float GaussianSample (float mean, float std)
     {
+        std *= (float)userPrefs.varianceMultiplier;
         float u1 = 1 - Random.Range(0f, 1f);
         float u2 = 1 - Random.Range(0f, 1f);
         float z = Mathf.Sqrt(-2 * Mathf.Log(u1)) * Mathf.Cos(2 * Mathf.PI * u2);
@@ -214,4 +215,6 @@ public struct UserPrefs{
 	public double furtherBodyCV;
 	public double initialFunctionCV;
 	public double furtherFunctionCV;
+    public double ecosystemSpacing;
+    public double varianceMultiplier;
 }

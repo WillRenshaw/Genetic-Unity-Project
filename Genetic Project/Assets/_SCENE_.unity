@@ -236,11 +236,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef08f78da28eff24fa8c4d81d2a134cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentGen:
-    population: []
-    genNumber: 0
-    tested: 0
-    sorted: 0
   ecosystem: {fileID: 1267672460174238, guid: bf3287e20efef2f4e80457bf4a179651, type: 2}
   simulationLength: 10
   XAxis: 1

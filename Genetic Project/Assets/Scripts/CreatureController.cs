@@ -25,6 +25,8 @@ public class CreatureController : MonoBehaviour {
 
 	public Text tagUI;
 
+
+    private bool inverted = false;
     public void BuildCreature()
     {
         //CreateBody
@@ -85,14 +87,45 @@ public class CreatureController : MonoBehaviour {
 			leftHip.transform.localRotation = Quaternion.AngleAxis (genes.GetLHF().GetValue (Time.time), Vector3.forward);
 			rightKnee.transform.localRotation = Quaternion.AngleAxis (genes.GetRKF().GetValue (Time.time), Vector3.forward);
 			leftKnee.transform.localRotation = Quaternion.AngleAxis (genes.GetLKF().GetValue (Time.time), Vector3.forward);
+            if(transform.localPosition.y < 0)
+            {
+                transform.Translate(new Vector3(0, -(transform.localPosition.y - 3), 0));
+                Debug.Log("Prevented Boundary Movement");
+            }
+            else if(transform.localPosition.y > Helper.userPrefs.ecosystemSpacing)
+            {
+                transform.Translate(new Vector3(0, (float)Helper.userPrefs.ecosystemSpacing - transform.localPosition.y - 3, 0));
+                Debug.Log("Prevented Boundary Movement");
+            }
+            if(GetComponent<Rigidbody>().velocity.magnitude > 50)
+            {
+                GetComponent<Rigidbody>().velocity = new Vector3(0,0, 0);
+                Debug.Log("Velocity Set To 0");
+            }
+            if(transform.localPosition.magnitude > 9999)
+            {
+                transform.localPosition = new Vector3(0, 0, 0);
+                Debug.Log("Set a position to 0");
+            }
+
 
 			genes.SetFitness(0);
-			if(testXAxis){
+            if (Mathf.Abs(this.transform.rotation.eulerAngles.z) > 90f)
+            {
+                inverted = true;
+            }
+            if (testXAxis){
 				genes.SetFitness( genes.GetFitness() +Mathf.Abs(transform.position.x));
 			}
 			if (testYAxis && transform.localPosition.y > maxY) {
 				maxY = transform.localPosition.y;
 			}
+            if (inverted)
+            {
+                genes.SetFitness(genes.GetFitness() * 0.5f);
+            }
+
+            
             genes.SetFitness(genes.GetFitness() + maxY);
 			tagUI.text = genes.NAME + "\nFitness: " + (int)genes.GetFitness();
 		}

@@ -118,7 +118,7 @@ Transform:
   m_GameObject: {fileID: 1801683136373250}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 9999999, y: 3, z: 1}
+  m_LocalScale: {x: 9999, y: 5, z: 1}
   m_Children: []
   m_Father: {fileID: 4469833224220490}
   m_RootOrder: 1
@@ -185,7 +185,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1092662607782182}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 50
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -267,13 +267,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b2164b780dd3f74184f782ef35cafa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  genes:
-    bodyLength: 5
-    RUpperLegLength: 2
-    LUpperLegLength: 2
-    RLowerLegLength: 1
-    LLowerLegLength: 0.5
-    fitness: 0
   bodyPreset: {fileID: 1953236387857938, guid: 2129dea66b4aed241a82e85dc4e7cb35, type: 2}
   rightPreset: {fileID: 1878615125651174, guid: 3ce0d023d3bc45c419f3832650609e59,
     type: 2}
