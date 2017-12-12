@@ -21,18 +21,18 @@ public class Creature{
     }
 
 
-    public Function RHF = new SinWave(1, 1, 0);
-    public Function LHF = new SinWave(1, 1, 0);
-    public Function RKF = new SinWave(1, 1, 0);
-    public Function LKF = new SinWave(1, 1, 0);
+    private Function RHF = new SinWave(1, 1, 0);
+    private Function LHF = new SinWave(1, 1, 0);
+    private Function RKF = new SinWave(1, 1, 0);
+    private Function LKF = new SinWave(1, 1, 0);
 
-    public float bodyLength = 5f;
-    public float RUpperLegLength = 2f;
-    public float LUpperLegLength = 2f;
-    public float RLowerLegLength = 1f;
-    public float LLowerLegLength = 1f;
+    private float bodyLength = 5f;
+    private float RUpperLegLength = 2f;
+    private float LUpperLegLength = 2f;
+    private float RLowerLegLength = 1f;
+    private float LLowerLegLength = 1f;
 
-    public float fitness = 0f;
+    private float fitness = 0f;
 
     public Creature(string n, int gen, int IDnum)
     {
@@ -41,4 +41,94 @@ public class Creature{
         id = IDnum;
     }
 
+    public float GetBodyLength()
+    {
+        return bodyLength;
+    }
+    public void SetBodyLength(float l)
+    {
+        bodyLength = l;
+    }
+
+    public float GetRUpperLegLength()
+    {
+        return RUpperLegLength;
+    }
+    public void SetRUpperLegLength(float l)
+    {
+        RUpperLegLength = l;
+    }
+
+    public float GetLUpperLegLength()
+    {
+        return LUpperLegLength;
+    }
+    public void SetLUpperLegLength(float l)
+    {
+        LUpperLegLength = l;
+    }
+    public float GetRLowerLegLength()
+    {
+        return RLowerLegLength;
+    }
+    public void SetRLowerLegLength(float l)
+    {
+        RLowerLegLength = l;
+    }
+
+    public float GetLLowerLegLength()
+    {
+        return LLowerLegLength;
+    }
+    public void SetLLowerLegLength(float l)
+    {
+        LLowerLegLength = l;
+    }
+
+    public Function GetRHF()
+    {
+        return (RHF);
+    }
+    public void SetRHF(Function f)
+    {
+        RHF = f;
+    }
+
+    public Function GetLHF()
+    {
+        return (LHF);
+    }
+    public void SetLHF(Function f)
+    {
+        LHF = f;
+    }
+
+    public Function GetRKF()
+    {
+        return (RKF);
+    }
+    public void SetRKF(Function f)
+    {
+        RKF = f;
+    }
+
+    public Function GetLKF()
+    {
+        return (LKF);
+    }
+    public void SetLKF(Function f)
+    {
+        LKF = f;
+    }
+
+    public float GetFitness()
+    {
+        return fitness;
+    }
+
+    public void SetFitness(float f)
+    {
+        fitness = f;
+    }
 }
+

@@ -16,7 +16,7 @@ public class GenerationController : MonoBehaviour {
 	void StartSimulation(){
 		Debug.Log ("STARTED SIMULATION AT: " + Time.time);
 		int i = 0;
-		foreach (Creature c in currentGen.population) {
+		foreach (Creature c in currentGen.GetPopulation()) {
 			GameObject eco = Instantiate (ecosystem);
 			eco.name = "Ecosystem " + i;
 			eco.transform.parent = this.transform;
@@ -31,12 +31,14 @@ public class GenerationController : MonoBehaviour {
 	}
 
 	void EndSimulation(){
+        List<Creature> p = currentGen.GetPopulation();
         Debug.Log("ENDED SIMULATION AT: " + Time.time);
 		for (int i = 0; i < transform.childCount; i++) {
 			transform.GetChild (i).GetComponentInChildren<CreatureController> ().running = false;
 			Creature c = transform.GetChild (i).GetComponentInChildren<CreatureController>().genes;
-			currentGen.population [i] = c;
+			p [i] = c;
 		}
+        currentGen.SetPopulation(p);
 	}
 
 	void Start(){
@@ -53,11 +55,11 @@ public class GenerationController : MonoBehaviour {
         
 		Creature c1 = new Creature("c1", 1, 1);
 		Creature c2 = new Creature("c2", 1, 2);
-		g.population.Add(c1);
-		g.population.Add(c2);
-		for (int i = 0; i < 100; i++) {
-			Creature c3 = Helper.MateCreatures (c1, c2, g.genNumber, i + 3);
-			g.population.Add(c3);
+		g.AppendCreature(c1);
+		g.AppendCreature(c2);
+		for (int i = 0; i < 10; i++) {
+			Creature c3 = Helper.MateCreatures (c1, c2, g.GENNUMBER, i + 3);
+			g.AppendCreature(c3);
 		}
         
 
@@ -71,9 +73,11 @@ public class GenerationController : MonoBehaviour {
 		StartSimulation ();
 		yield return new WaitForSeconds (simulationLength);
 		EndSimulation ();
-		currentGen.tested = true;
-		Helper.quicksort (currentGen.population, 0, currentGen.population.Count - 1);
-		currentGen.sorted = true;
+        currentGen.MarkTested();
+        List<Creature> p = currentGen.GetPopulation();
+        Helper.quicksort (p, 0, p.Count - 1);
+        currentGen.SetPopulation(p);
+        currentGen.MarkSorted();
         //Get Best 3
         //Store Current Gen
         //Create New Gen

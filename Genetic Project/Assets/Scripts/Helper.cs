@@ -13,14 +13,14 @@ public static class Helper{
 		int i = lo - 1;
 		Creature pivot = A [hi];
 		for (int j = lo; j < hi; j++) {
-			if (A [j].fitness < pivot.fitness) {
+			if (A [j].GetFitness() < pivot.GetFitness()) {
 				i += 1;
 				Creature temp = A [i];
 				A [i] = A [j];
 				A[j] = temp;
 			}
 		}
-		if (A [hi].fitness < A [i + 1].fitness) {
+		if (A [hi].GetFitness() < A [i + 1].GetFitness()) {
 			Creature temp = A [i + 1];
 			A [i+1] = A [hi];
 			A[hi] = temp;
@@ -61,7 +61,7 @@ public static class Helper{
     {
         savedGenerations.Add(gen);
 		WriteToFile("/savedgenerations.gd", savedGenerations);
-        Debug.Log("Saved Generation " + gen.genNumber  + " to " +  Application.persistentDataPath + "/savedgenerations.gd");
+        Debug.Log("Saved Generation " + gen.GENNUMBER  + " to " +  Application.persistentDataPath + "/savedgenerations.gd");
     }
 
 	public static void WriteToFile(string fName, object data){
@@ -115,42 +115,42 @@ public static class Helper{
 		Creature c = new Creature(GetRandomName(), gen, ID);
         if(Random.Range(1,100) % 2 == 0)
         {
-			c.RHF = new SinWave(RandomFunctionValue(), RandomFunctionValue(), Random.Range(0, 360));
+			c.SetRHF(new SinWave(RandomFunctionValue(), RandomFunctionValue(), Random.Range(0, 360)));
         }
         else
         {
-			c.RHF = new TriangleWave(RandomFunctionValue(), RandomFunctionValue(), Random.Range(0, 360));
+			c.SetRHF(new TriangleWave(RandomFunctionValue(), RandomFunctionValue(), Random.Range(0, 360)));
         }
         if (Random.Range(1, 100) % 2 == 0)
         {
-			c.LHF = new SinWave(RandomFunctionValue(), RandomFunctionValue(), Random.Range(0, 360));
+			c.SetLHF(new SinWave(RandomFunctionValue(), RandomFunctionValue(), Random.Range(0, 360)));
         }
         else
         {
-			c.LHF = new TriangleWave(RandomFunctionValue(), RandomFunctionValue(), Random.Range(0, 360));
+			c.SetLHF(new TriangleWave(RandomFunctionValue(), RandomFunctionValue(), Random.Range(0, 360)));
         }
         if (Random.Range(1, 100) % 2 == 0)
         {
-			c.RKF = new SinWave(RandomFunctionValue(), RandomFunctionValue(), Random.Range(0, 360));
+			c.SetRKF(new SinWave(RandomFunctionValue(), RandomFunctionValue(), Random.Range(0, 360)));
         }
         else
         {
-			c.RKF = new TriangleWave(RandomFunctionValue(), RandomFunctionValue(), Random.Range(0, 360));
+			c.SetRKF(new TriangleWave(RandomFunctionValue(), RandomFunctionValue(), Random.Range(0, 360)));
         }
         if (Random.Range(1, 100) % 2 == 0)
         {
-			c.LKF = new SinWave(RandomFunctionValue(), RandomFunctionValue(), Random.Range(0, 360));
+			c.SetLKF(new SinWave(RandomFunctionValue(), RandomFunctionValue(), Random.Range(0, 360)));
         }
         else
         {
-			c.LKF = new TriangleWave(RandomFunctionValue(), RandomFunctionValue(), Random.Range(0, 360));
+			c.SetLKF(new TriangleWave(RandomFunctionValue(), RandomFunctionValue(), Random.Range(0, 360)));
         }
 
-		c.bodyLength = RandomBodyValue ();
-		c.RUpperLegLength = RandomBodyValue (2);
-		c.LUpperLegLength = RandomBodyValue (2);
-		c.RLowerLegLength = RandomBodyValue (1);
-		c.LLowerLegLength = RandomBodyValue (1);
+		c.SetBodyLength(RandomBodyValue ());
+		c.SetRUpperLegLength(RandomBodyValue (2));
+		c.SetLUpperLegLength(RandomBodyValue (2));
+		c.SetRLowerLegLength(RandomBodyValue (1));
+		c.SetLLowerLegLength(RandomBodyValue (1));
 
         return c;
 
@@ -195,15 +195,15 @@ public static class Helper{
     /// <returns></returns>
 	public static Creature MateCreatures(Creature c1, Creature c2, int gen, int ID){
 		Creature child = new Creature (GetRandomName(), gen, ID);
-		child.RHF = MateFunction (c1.RHF, c2.RHF);
-		child.LHF = MateFunction (c1.LHF, c2.LHF);
-		child.RKF = MateFunction (c1.RKF, c2.RKF);
-		child.LKF = MateFunction (c1.LKF, c2.LKF);
-		child.bodyLength = GaussianSample ((c1.bodyLength + c2.bodyLength) / 2, Mathf.Abs (c1.bodyLength - c2.bodyLength));
-		child.RUpperLegLength = GaussianSample ((c1.RUpperLegLength + c2.RUpperLegLength) / 2, Mathf.Abs (c1.RUpperLegLength - c2.RUpperLegLength));
-		child.LUpperLegLength = GaussianSample ((c1.LUpperLegLength + c2.LUpperLegLength) / 2, Mathf.Abs (c1.LUpperLegLength - c2.LUpperLegLength));
-		child.RLowerLegLength = GaussianSample ((c1.RLowerLegLength + c2.RLowerLegLength) / 2, Mathf.Abs (c1.RLowerLegLength - c2.RLowerLegLength));
-		child.LLowerLegLength = GaussianSample ((c1.LLowerLegLength + c2.LLowerLegLength) / 2, Mathf.Abs (c1.LLowerLegLength - c2.LLowerLegLength));
+		child.SetRHF(MateFunction(c1.GetRHF(), c2.GetRHF()));
+		child.SetLHF(MateFunction (c1.GetLHF(), c2.GetLHF()));
+		child.SetRKF(MateFunction (c1.GetRKF(), c2.GetRKF()));
+		child.SetLKF(MateFunction (c1.GetLKF(), c2.GetLKF()));
+		child.SetBodyLength(GaussianSample ((c1.GetBodyLength() + c2.GetBodyLength()) / 2, Mathf.Abs (c1.GetBodyLength() - c2.GetBodyLength())));
+		child.SetRUpperLegLength(GaussianSample ((c1.GetRUpperLegLength() + c2.GetRUpperLegLength()) / 2, Mathf.Abs (c1.GetRUpperLegLength() - c2.GetRUpperLegLength())));
+		child.SetLUpperLegLength(GaussianSample ((c1.GetLUpperLegLength() + c2.GetLUpperLegLength()) / 2, Mathf.Abs (c1.GetLUpperLegLength() - c2.GetLUpperLegLength())));
+		child.SetRLowerLegLength(GaussianSample ((c1.GetRLowerLegLength() + c2.GetRLowerLegLength()) / 2, Mathf.Abs (c1.GetRLowerLegLength() - c2.GetRLowerLegLength())));
+		child.SetLLowerLegLength(GaussianSample ((c1.GetLLowerLegLength() + c2.GetLLowerLegLength()) / 2, Mathf.Abs (c1.GetLLowerLegLength() - c2.GetLLowerLegLength())));
 		return child;
 	}
 }
@@ -214,5 +214,4 @@ public struct UserPrefs{
 	public double furtherBodyCV;
 	public double initialFunctionCV;
 	public double furtherFunctionCV;
-
 }
