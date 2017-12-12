@@ -115,7 +115,7 @@ public class CreatureController : MonoBehaviour {
                 inverted = true;
             }
             if (testXAxis){
-				genes.SetFitness( genes.GetFitness() +Mathf.Abs(transform.position.x));
+				genes.SetFitness( genes.GetFitness() + transform.position.x);
 			}
 			if (testYAxis && transform.localPosition.y > maxY) {
 				maxY = transform.localPosition.y;

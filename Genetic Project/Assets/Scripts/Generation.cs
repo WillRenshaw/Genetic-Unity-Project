@@ -16,8 +16,15 @@ public class Generation
         }
     }
     private float meanFitness = 0; //The mean fitness of the generation
+    public float MEANFITNESS
+    {
+        get
+        {
+            return meanFitness;
+        }
+    }
     private float maxFitness = 0; //The maximum fitness in the generation
-    private float minFitness = 0; //The minimum fitness in the generation
+    private float minFitness = 9999; //The minimum fitness in the generation
     private float sdFitness = 0; //The standard deviation of the fitness in the generation
     private bool tested = false; //Has the simulation been run?
     public bool TESTED
@@ -64,5 +71,28 @@ public class Generation
     public void SetPopulation(List<Creature> p)
     {
        population = p;
+    }
+
+    public void calculateStats()
+    {
+        int n = 0;
+        float sumFitness = 0;
+        float sumFitnessSquared = 0;
+        foreach (Creature c in population)
+        {
+            n++;
+            sumFitness += c.GetFitness();
+            sumFitnessSquared += Mathf.Pow(c.GetFitness(), 2);
+            if (c.GetFitness() < minFitness)
+            {
+                minFitness = c.GetFitness();
+            }
+            if(c.GetFitness() > maxFitness)
+            {
+                maxFitness = c.GetFitness();
+            }
+        }
+        meanFitness = sumFitness / n;
+        sdFitness = Mathf.Sqrt((sumFitnessSquared / n) - Mathf.Pow(meanFitness, 2));
     }
 }

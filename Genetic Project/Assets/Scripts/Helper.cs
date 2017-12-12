@@ -95,13 +95,13 @@ public static class Helper{
 		return Mathf.Clamp (GaussianSample (mean, mean * (float)userPrefs.initialFunctionCV), 0.1f, 200f);
 	}
 
-	private static float RandomBodyValue(float mean = 5f){
-		return Mathf.Clamp (GaussianSample (mean,mean * (float)userPrefs.initialBodyCV), 0.2f, 10f);
+	private static float RandomBodyValue(float mean = 2f){
+		return Mathf.Clamp (GaussianSample (mean,mean * (float)userPrefs.initialBodyCV), 0.2f, 5f);
 	}
 
 	private static string GetRandomName(){
 		string[] names = File.ReadAllLines(Application.dataPath + "/Prefabs/names.txt");
-		return names [Random.RandomRange (0, names.Length - 1)];
+		return names [Random.Range (0, names.Length - 1)];
 	}
 
     /// <summary>
@@ -147,7 +147,7 @@ public static class Helper{
 			c.SetLKF(new TriangleWave(RandomFunctionValue(), RandomFunctionValue(), Random.Range(0, 360)));
         }
 
-		c.SetBodyLength(RandomBodyValue ());
+		c.SetBodyLength(RandomBodyValue (4));
 		c.SetRUpperLegLength(RandomBodyValue (2));
 		c.SetLUpperLegLength(RandomBodyValue (2));
 		c.SetRLowerLegLength(RandomBodyValue (1));
@@ -178,10 +178,10 @@ public static class Helper{
 			typeMean += 20;
 		}
 		if (GaussianSample (typeMean, 30f) <= 50) {
-			f = new TriangleWave (GaussianSample ((f1.GetAmplitude() + f2.GetAmplitude()) / 2, Mathf.Abs (f1.GetAmplitude() - f2.GetAmplitude())), GaussianSample ((f1.GetWavelength() + f2.GetWavelength()) / 2, Mathf.Abs (f1.GetWavelength() - f2.GetWavelength())), GaussianSample ((f1.GetPhase() + f2.GetPhase()) / 2, Mathf.Abs (f1.GetPhase() - f2.GetPhase())));
+			f = new TriangleWave (Mathf.Clamp(GaussianSample ((f1.GetAmplitude() + f2.GetAmplitude()) / 2, Mathf.Abs (f1.GetAmplitude() - f2.GetAmplitude())), 0, 90), Mathf.Clamp(GaussianSample ((f1.GetWavelength() + f2.GetWavelength()) / 2, Mathf.Abs (f1.GetWavelength() - f2.GetWavelength())), 2f, 5f), GaussianSample ((f1.GetPhase() + f2.GetPhase()) / 2, Mathf.Abs (f1.GetPhase() - f2.GetPhase())));
 		} else {
-			f = new SinWave (GaussianSample ((f1.GetAmplitude() + f2.GetAmplitude()) / 2, Mathf.Abs (f1.GetAmplitude() - f2.GetAmplitude())), GaussianSample ((f1.GetWavelength() + f2.GetWavelength()) / 2, Mathf.Abs (f1.GetWavelength() - f2.GetWavelength())), GaussianSample ((f1.GetPhase() + f2.GetPhase()) / 2, Mathf.Abs (f1.GetPhase() - f2.GetPhase())));
-		}
+			f = new SinWave(Mathf.Clamp(GaussianSample((f1.GetAmplitude() + f2.GetAmplitude()) / 2, Mathf.Abs(f1.GetAmplitude() - f2.GetAmplitude())), 0, 90), Mathf.Clamp(GaussianSample((f1.GetWavelength() + f2.GetWavelength()) / 2, Mathf.Abs(f1.GetWavelength() - f2.GetWavelength())), 2f, 5f), GaussianSample((f1.GetPhase() + f2.GetPhase()) / 2, Mathf.Abs(f1.GetPhase() - f2.GetPhase())));
+        }
 
 		return f;
 	}
@@ -200,11 +200,11 @@ public static class Helper{
 		child.SetLHF(MateFunction (c1.GetLHF(), c2.GetLHF()));
 		child.SetRKF(MateFunction (c1.GetRKF(), c2.GetRKF()));
 		child.SetLKF(MateFunction (c1.GetLKF(), c2.GetLKF()));
-		child.SetBodyLength(GaussianSample ((c1.GetBodyLength() + c2.GetBodyLength()) / 2, Mathf.Abs (c1.GetBodyLength() - c2.GetBodyLength())));
-		child.SetRUpperLegLength(GaussianSample ((c1.GetRUpperLegLength() + c2.GetRUpperLegLength()) / 2, Mathf.Abs (c1.GetRUpperLegLength() - c2.GetRUpperLegLength())));
-		child.SetLUpperLegLength(GaussianSample ((c1.GetLUpperLegLength() + c2.GetLUpperLegLength()) / 2, Mathf.Abs (c1.GetLUpperLegLength() - c2.GetLUpperLegLength())));
-		child.SetRLowerLegLength(GaussianSample ((c1.GetRLowerLegLength() + c2.GetRLowerLegLength()) / 2, Mathf.Abs (c1.GetRLowerLegLength() - c2.GetRLowerLegLength())));
-		child.SetLLowerLegLength(GaussianSample ((c1.GetLLowerLegLength() + c2.GetLLowerLegLength()) / 2, Mathf.Abs (c1.GetLLowerLegLength() - c2.GetLLowerLegLength())));
+        child.SetBodyLength(Mathf.Clamp(GaussianSample((c1.GetBodyLength() + c2.GetBodyLength()) / 2, Mathf.Abs(c1.GetBodyLength() - c2.GetBodyLength())), 0.1f, 6f));
+		child.SetRUpperLegLength(Mathf.Clamp(GaussianSample ((c1.GetRUpperLegLength() + c2.GetRUpperLegLength()) / 2, Mathf.Abs (c1.GetRUpperLegLength() - c2.GetRUpperLegLength())), 0.1f, 3f));
+		child.SetLUpperLegLength(Mathf.Clamp(GaussianSample ((c1.GetLUpperLegLength() + c2.GetLUpperLegLength()) / 2, Mathf.Abs (c1.GetLUpperLegLength() - c2.GetLUpperLegLength())), 0.1f, 3f));
+		child.SetRLowerLegLength(Mathf.Clamp(GaussianSample ((c1.GetRLowerLegLength() + c2.GetRLowerLegLength()) / 2, Mathf.Abs (c1.GetRLowerLegLength() - c2.GetRLowerLegLength())), 0.1f, 3f));
+		child.SetLLowerLegLength(Mathf.Clamp(GaussianSample ((c1.GetLLowerLegLength() + c2.GetLLowerLegLength()) / 2, Mathf.Abs (c1.GetLLowerLegLength() - c2.GetLLowerLegLength())), 0.1f, 3f));
 		return child;
 	}
 }

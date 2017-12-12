@@ -1,19 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class GenerationController : MonoBehaviour {
 	public Generation currentGen;
 	public GameObject ecosystem;
+    public Text genUI;
 
-
-	[Range(0f, 100f)]
+    [Range(0f, 100f)]
 	public float simulationLength = 10f;
 	public bool XAxis = false;
 	public bool YAxis = false;
 
 	void StartSimulation(){
+        
         foreach (Transform child in this.transform)
         {
             GameObject.Destroy(child.gameObject);
@@ -64,7 +66,7 @@ public class GenerationController : MonoBehaviour {
 
         g.AppendCreature(c1);
 		g.AppendCreature(c2);
-		for (int i = 0; i < 8; i++) {
+		for (int i = 0; i < 48; i++) {
 			Creature c3 = Helper.MateCreatures (c1, c2, g.GENNUMBER, i + 3);
 			g.AppendCreature(c3);
 		}
@@ -85,15 +87,18 @@ public class GenerationController : MonoBehaviour {
         Helper.quicksort (p, 0, p.Count - 1);
         currentGen.SetPopulation(p);
         currentGen.MarkSorted();
-
+        currentGen.calculateStats();
 
         List<Creature> parents = new List<Creature>();
         p.Reverse();
         parents.Add(currentGen.GetPopulation()[0]);
+        print(currentGen.GetPopulation()[0].GetFitness());
         parents.Add(currentGen.GetPopulation()[1]);
-        parents.Add(currentGen.GetPopulation()[2]);
+        print(currentGen.GetPopulation()[1].GetFitness());
+        print(currentGen.GetPopulation()[2].GetFitness());
 
-        currentGen = CreateNewGeneration(10, parents, currentGen.GENNUMBER + 1);
+        genUI.text = ("Gen: " + (currentGen.GENNUMBER + 1) +"\nPrevious Mean Fitness: " + (int)currentGen.MEANFITNESS);
+        currentGen = CreateNewGeneration(50, parents, currentGen.GENNUMBER + 1);
         StartCoroutine(RunSimulation());
     }
 
