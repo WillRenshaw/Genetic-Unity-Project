@@ -14,6 +14,9 @@ public class GenerationController : MonoBehaviour {
 	public bool XAxis = false;
 	public bool YAxis = false;
 
+
+	List<Creature> parents;
+
 	void StartSimulation(){
         
         foreach (Transform child in this.transform)
@@ -48,6 +51,13 @@ public class GenerationController : MonoBehaviour {
 	}
 
 	void Start(){
+
+		parents = new List<Creature> ();
+		Creature c = new Creature ("",1,1);
+		parents.Add (c);
+		parents.Add (c);
+		parents.Add (c);
+
         Helper.userPrefs = new UserPrefs() {
             initialBodyCV = 1,
             furtherBodyCV = 1,
@@ -89,13 +99,27 @@ public class GenerationController : MonoBehaviour {
         currentGen.MarkSorted();
         currentGen.calculateStats();
 
-        List<Creature> parents = new List<Creature>();
+     
         p.Reverse();
-        parents.Add(currentGen.GetPopulation()[0]);
-        print(currentGen.GetPopulation()[0].GetFitness());
-        parents.Add(currentGen.GetPopulation()[1]);
-        print(currentGen.GetPopulation()[1].GetFitness());
-        print(currentGen.GetPopulation()[2].GetFitness());
+		foreach (Creature c in p) {
+			if (c.GetFitness () > parents [0].GetFitness ()) {
+				parents [2] = parents [1];
+				parents [1] = parents [0];
+				parents [0] = c;
+
+				print ("Parent 1 Replaced, new fitness: " + c.GetFitness ());
+			}
+			else if (c.GetFitness () > parents [1].GetFitness ()) {
+				parents [2] = parents [1];
+				parents [1] = c;
+				print ("Parent 2 Replaced, new fitness: " + c.GetFitness ());
+			}
+			else if (c.GetFitness () > parents [2].GetFitness ()) {
+				parents [2] = c;
+				print ("Parent 3 Replaced, new fitness: " + c.GetFitness ());
+			}
+		}
+
 
         genUI.text = ("Gen: " + (currentGen.GENNUMBER + 1) +"\nPrevious Mean Fitness: " + (int)currentGen.MEANFITNESS);
         currentGen = CreateNewGeneration(200, parents, currentGen.GENNUMBER + 1);

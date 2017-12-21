@@ -112,7 +112,7 @@ public static class Helper{
     /// <returns></returns>
     public static Creature CreateRandomCreature(int gen, int ID)
     {
-        
+
 		Creature c = new Creature(GetRandomName(), gen, ID);
         if(Random.Range(1,100) % 2 == 0)
         {
@@ -183,9 +183,9 @@ public static class Helper{
 		child.SetRHF(MateFunction(c1.GetRHF(), c2.GetRHF()));
 		child.SetLHF(MateFunction (c1.GetLHF(), c2.GetLHF()));
 		
-        child.SetBodyLength(Mathf.Clamp(GaussianSample((c1.GetBodyLength() + c2.GetBodyLength()) / 2, Mathf.Abs(c1.GetBodyLength() - c2.GetBodyLength())), 0.1f, 6f));
-		child.SetRUpperLegLength(Mathf.Clamp(GaussianSample ((c1.GetRUpperLegLength() + c2.GetRUpperLegLength()) / 2, Mathf.Abs (c1.GetRUpperLegLength() - c2.GetRUpperLegLength())), 0.1f, 3f));
-		child.SetLUpperLegLength(Mathf.Clamp(GaussianSample ((c1.GetLUpperLegLength() + c2.GetLUpperLegLength()) / 2, Mathf.Abs (c1.GetLUpperLegLength() - c2.GetLUpperLegLength())), 0.1f, 3f));
+        child.SetBodyLength(Mathf.Clamp(GaussianSample((c1.GetBodyLength() + c2.GetBodyLength()) / 2, 2), 0.1f, 6f));
+		child.SetRUpperLegLength(Mathf.Clamp(GaussianSample ((c1.GetRUpperLegLength() + c2.GetRUpperLegLength()) / 2, 2), 0.1f, 3f));
+		child.SetLUpperLegLength(Mathf.Clamp(GaussianSample ((c1.GetLUpperLegLength() + c2.GetLUpperLegLength()) / 2, 2), 0.1f, 3f));
 		return child;
 	}
 }
