@@ -104,6 +104,28 @@ public static class Helper{
 		return names [Random.Range (0, names.Length - 1)];
 	}
 
+    public static void writeScore(float best, float mean)
+    {
+        var meanList = new List<string>(File.ReadAllLines(Application.dataPath + "/mean.txt"));
+        var bestList = new List<string>(File.ReadAllLines(Application.dataPath + "/best.txt"));
+        meanList.Add(mean.ToString());
+        bestList.Add(best.ToString());
+
+        TextWriter tw = new StreamWriter(Application.dataPath + "/mean.txt");
+
+        foreach (string s in meanList)
+            tw.WriteLine(s);
+
+        tw.Close();
+        tw = new StreamWriter(Application.dataPath + "/best.txt");
+
+        foreach (string s in bestList)
+            tw.WriteLine(s);
+
+        tw.Close();
+
+    }
+
     /// <summary>
     /// Creates a random creature
     /// </summary>
@@ -149,26 +171,30 @@ public static class Helper{
     /// <param name="f2">Second Function</param>
     /// <returns></returns>
 	private static Function MateFunction(Function f1, Function f2){
-		Function f;
-		float typeMean = 50;
-		if (f1.GetType () == typeof(TriangleWave)) {
-			typeMean -= 20;
-		} else {
-			typeMean += 20;
-		}
-		if (f2.GetType () == typeof(TriangleWave)) {
-			typeMean -= 20;
-		} else {
-			typeMean += 20;
-		}
-		if (GaussianSample (typeMean, 30f) <= 50) {
-			f = new TriangleWave (Mathf.Clamp(GaussianSample ((f1.GetAmplitude() + f2.GetAmplitude()) / 2, Mathf.Abs (f1.GetAmplitude() - f2.GetAmplitude())), 0, 90), Mathf.Clamp(GaussianSample ((f1.GetWavelength() + f2.GetWavelength()) / 2, Mathf.Abs (f1.GetWavelength() - f2.GetWavelength())), 2f, 5f), GaussianSample ((f1.GetPhase() + f2.GetPhase()) / 2, Mathf.Abs (f1.GetPhase() - f2.GetPhase())));
-		} else {
-			f = new SinWave(Mathf.Clamp(GaussianSample((f1.GetAmplitude() + f2.GetAmplitude()) / 2, Mathf.Abs(f1.GetAmplitude() - f2.GetAmplitude())), 0, 90), Mathf.Clamp(GaussianSample((f1.GetWavelength() + f2.GetWavelength()) / 2, Mathf.Abs(f1.GetWavelength() - f2.GetWavelength())), 2f, 5f), GaussianSample((f1.GetPhase() + f2.GetPhase()) / 2, Mathf.Abs(f1.GetPhase() - f2.GetPhase())));
+        
+        float a = (f1.GetAmplitude() + f2.GetAmplitude()) / 2;
+        float w = (f1.GetWavelength() + f2.GetWavelength()) / 2;
+        float p = (f1.GetPhase() + f2.GetPhase()) / 2;
+        //Choose a random variable to mutate
+        switch (Random.Range(0, 2 + 1))
+        {
+            case 0:
+                a += Random.Range(-0.01f, 0.01f);
+                a = Mathf.Clamp(a, -1f, +1f);
+                break;
+            case 1:
+                p += Random.Range(-0.01f, 0.01f);
+                p = Mathf.Clamp(p, -2f, 2f);
+                break;
+            case 2:
+                w += Random.Range(-0.01f, 0.01f);
+                w = Mathf.Clamp(w, 0.1f, 2f);
+                break;
+
         }
 
-		return f;
-	}
+        return new SinWave(a, w, p);
+    }
 
     /// <summary>
     /// Combines two creatures and returns a child with their properties
@@ -180,14 +206,11 @@ public static class Helper{
     /// <returns></returns>
 	public static Creature MateCreatures(Creature c1, Creature c2, int gen, int ID){
 		Creature child = new Creature (GetRandomName(), gen, ID);
-		child.SetRHF(MateFunction(c1.GetRHF(), c2.GetRHF()));
-		child.SetLHF(MateFunction (c1.GetLHF(), c2.GetLHF()));
-		
-        child.SetBodyLength(Mathf.Clamp(GaussianSample((c1.GetBodyLength() + c2.GetBodyLength()) / 2, 2), 0.1f, 6f));
-		child.SetRUpperLegLength(Mathf.Clamp(GaussianSample ((c1.GetRUpperLegLength() + c2.GetRUpperLegLength()) / 2, 2), 0.1f, 3f));
-		child.SetLUpperLegLength(Mathf.Clamp(GaussianSample ((c1.GetLUpperLegLength() + c2.GetLUpperLegLength()) / 2, 2), 0.1f, 3f));
-		return child;
-	}
+        child.SetRHF(MateFunction(c1.GetRHF(), c2.GetRHF()));
+        child.SetLHF(MateFunction (c1.GetLHF(), c2.GetLHF()));
+        return child;
+        
+    }
 }
 
 [System.Serializable]

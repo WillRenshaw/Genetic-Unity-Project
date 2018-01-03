@@ -1,0 +1,165 @@
+fileFormatVersion: 2
+guid: 9e86f50bdd9116f4f94e3fd959a0f7b9
+timeCreated: 1460405380
+licenseType: Pro
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: ragdoll_head
+    21300002: ragdoll_neck
+    21300004: ragdoll_body
+    21300006: ragdoll_hip
+    21300008: ragdoll_forearm
+    21300010: ragdoll_arm
+    21300012: ragdoll_foreleg
+    21300014: ragdoll_leg
+    21300016: ragdoll_foot
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 512
+  textureSettings:
+    filterMode: 0
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: ragdoll_head
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 76
+        width: 20
+        height: 20
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: ragdoll_neck
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 88
+        width: 10
+        height: 8
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: ragdoll_body
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 34
+        width: 22
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: ragdoll_hip
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 15
+        width: 22
+        height: 17
+      alignment: 2
+      pivot: {x: 0.5, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: ragdoll_forearm
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 41
+        width: 12
+        height: 33
+      alignment: 2
+      pivot: {x: 0.5, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: ragdoll_arm
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 6
+        width: 10
+        height: 33
+      alignment: 2
+      pivot: {x: 0.5, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: ragdoll_foreleg
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 56
+        width: 16
+        height: 40
+      alignment: 2
+      pivot: {x: 0.5, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: ragdoll_leg
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 18
+        width: 12
+        height: 35
+      alignment: 2
+      pivot: {x: 0.5, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: ragdoll_foot
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 6
+        width: 25
+        height: 7
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
