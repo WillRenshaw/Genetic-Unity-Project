@@ -99,25 +99,25 @@ public struct Gene : IMutable<Gene>
 
 
     // Sinusoid
-   // public static float Evaluate4At(Gene gene, float time)
-   // {
-   //     float min = gene.values[0];
-   //     float max = gene.values[1];
-   //     float period = gene.values[2];
-   //     float offset = gene.values[3];
+   public static float Evaluate4At(Gene gene, float time)
+    {
+        float min = gene.values[0];
+        float max = gene.values[1];
+        float period = gene.values[2];
+        float offset = gene.values[3];
 
-   //     min = Controller.linearInterpolation(0, 1, Evolution.S.minSin, Evolution.S.maxSin, min);
-   //     max = Controller.linearInterpolation(0, 1, Evolution.S.minSin, Evolution.S.maxSin, max);
-    //    period = Controller.linearInterpolation(0, 1, Evolution.S.minP, Evolution.S.maxP, period);
-     //   offset = Controller.linearInterpolation(0, 1, Evolution.S.minP, Evolution.S.maxP, offset);
+        min = Controller.linearInterpolation(0, 1, Evolution.S.minSin, Evolution.S.maxSin, min);
+        max = Controller.linearInterpolation(0, 1, Evolution.S.minSin, Evolution.S.maxSin, max);
+        period = Controller.linearInterpolation(0, 1, Evolution.S.minP, Evolution.S.maxP, period);
+        offset = Controller.linearInterpolation(0, 1, Evolution.S.minP, Evolution.S.maxP, offset);
 
-     //   return sinusoid(time + offset, min, max, period);
-    //}
+        return sinusoid(time + offset, min, max, period);
+    }
 
-    //public static float sinusoid(float x, float min, float max, float period)
-   // {
-    //    return (max - min) / 2 * (1 + Mathf.Sin(x * Mathf.PI * 2 / period)) + min;
-   // }
+    public static float sinusoid(float x, float min, float max, float period)
+    {
+        return (max - min) / 2 * (1 + Mathf.Sin(x * Mathf.PI * 2 / period)) + min;
+    }
 
 
 

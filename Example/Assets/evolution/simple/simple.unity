@@ -211,7 +211,7 @@ MonoBehaviour:
   minMutations: 1
   maxMutations: 20
   yGap: 5
-  simulationTime: 10
+  simulationTime: 50
   sexed: 1
   genomeLength: 2
   geneLength: 4

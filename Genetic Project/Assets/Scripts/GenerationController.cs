@@ -30,7 +30,7 @@ public class GenerationController : MonoBehaviour {
 			GameObject eco = Instantiate (ecosystem);
 			eco.name = "Ecosystem " + i;
 			eco.transform.parent = this.transform;
-			eco.transform.position = new Vector3(0,i * (float)Helper.userPrefs.ecosystemSpacing,0);
+			eco.transform.position = new Vector3(0,i * 50,0);
 			CreatureController cc = eco.GetComponentInChildren<CreatureController> ();
             cc.genes = c;
 			cc.running = true;
@@ -55,7 +55,7 @@ public class GenerationController : MonoBehaviour {
 
 	void Start(){ //Currently used to start the simulation
 		best = new Creature ("",1,1);
-       
+        best.SetFitness(-999999f);
 
 
         Generation g = new Generation (1);

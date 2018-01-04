@@ -21,8 +21,8 @@ public class Creature{
     }
 
 
-    private Function RHF = new SinWave(1f, 1f, 0);
-    private Function LHF = new SinWave(1f, 1f, 0);
+    private Function RHF = new SinWave(1.5f, 1f, 0);
+    private Function LHF = new SinWave(0.5f, 1f, 0);
 
 
     private float bodyLength = 5f;

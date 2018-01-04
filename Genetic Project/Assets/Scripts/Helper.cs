@@ -49,7 +49,6 @@ public static class Helper{
     /// <returns>Returns a normally distributed number</returns>
     public static float GaussianSample (float mean, float std)
     {
-        std *= (float)userPrefs.varianceMultiplier;
         float u1 = 1 - Random.Range(0f, 1f);
         float u2 = 1 - Random.Range(0f, 1f);
         float z = Mathf.Sqrt(-2 * Mathf.Log(u1)) * Mathf.Cos(2 * Mathf.PI * u2);
@@ -176,18 +175,21 @@ public static class Helper{
         float w = (f1.GetWavelength() + f2.GetWavelength()) / 2;
         float p = (f1.GetPhase() + f2.GetPhase()) / 2;
         //Choose a random variable to mutate
+
+        float multiplier = GaussianSample(1f, 0.01f);
+        //Debug.Log("Multiplier is: " + multiplier);
         switch (Random.Range(0, 2 + 1))
         {
             case 0:
-                a += Random.Range(-0.01f, 0.01f);
-                a = Mathf.Clamp(a, -1f, +1f);
+                a *= multiplier;
+                a = Mathf.Clamp(a, -2.5f, 2.5f);
                 break;
             case 1:
-                p += Random.Range(-0.01f, 0.01f);
-                p = Mathf.Clamp(p, -2f, 2f);
+                p *= multiplier * 2;
+                p = Mathf.Clamp(p, -10f, 10f);
                 break;
             case 2:
-                w += Random.Range(-0.01f, 0.01f);
+                w *= multiplier * 2;
                 w = Mathf.Clamp(w, 0.1f, 2f);
                 break;
 

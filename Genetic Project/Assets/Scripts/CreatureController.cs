@@ -12,30 +12,54 @@ public class CreatureController : MonoBehaviour {
 
     public bool running = true;
 
-	public Text tagUI;
+    private float startTime;
+
+    public Text tagUI;
 
 
-	void FixedUpdate(){
-		if (running) {
-            rightJoint.distance = Mathf.Clamp(0.55f + genes.GetRHF().GetAmplitude() + genes.GetRHF().GetValue(Time.time), 0.55f, 1.05f);
-            leftJoint.distance = Mathf.Clamp(0.55f + genes.GetLHF().GetAmplitude() + genes.GetLHF().GetValue(Time.time), 0.55f, 1.05f);
+    private void Start()
+    {
+        startTime = Time.time;
+        print("START TIME IS: " + startTime);
+    }
 
-            //calcxulate fitness
+
+    void FixedUpdate(){
+        if (running) {
+            rightJoint.distance = Mathf.Clamp(2.5f + genes.GetRHF().GetAmplitude() + genes.GetRHF().GetValue(Time.time - startTime), 2.5f, 6f);
+            leftJoint.distance = Mathf.Clamp(2.5f + genes.GetLHF().GetAmplitude() + genes.GetLHF().GetValue(Time.time - startTime), 2.5f, 6f);
+
+            //calculate fitness
             genes.SetFitness(0);
 
             //is creature upright?
-            bool headUp = body.transform.eulerAngles.z < 0 + 30 || this.transform.eulerAngles.z > 360 - 30;
-            bool headDown = body.transform.eulerAngles.z > 180 - 45 && this.transform.eulerAngles.z < 180 + 45;
+           bool headUp = body.transform.eulerAngles.z < 0 + 30 || body.transform.eulerAngles.z > 360 - 30;
+           bool headDown = body.transform.eulerAngles.z > 180 - 30 && body.transform.eulerAngles.z < 180 + 30;
 
             //Set fitness
-            genes.SetFitness(body.transform.position.x);
+            genes.SetFitness(Mathf.Pow(body.transform.position.x, 1));
 
-       
+          
             //optionally give incentive for creature to remain upright
-            //genes.SetFitness(genes.GetFitness() * (headDown ? 0.5f : 1f) * (headUp ? 2f : 1f));
+           // genes.SetFitness(genes.GetFitness() * (headDown ? 0.25f : 1f));
+           
+            if (headDown)
+            {
+                genes.SetFitness(genes.GetFitness() * 0.1f);
 
-            tagUI.text = genes.NAME + "\nFitness: " +  genes.GetFitness();
-		}
+            }
+            if (headUp)
+            {
+                //genes.SetFitness(genes.GetFitness() + 2f);
+            }
+        }
+
 	}
+    private void Update()
+    {
+        {
+            tagUI.text = genes.NAME + "\nFitness: " + genes.GetFitness();
+        }
+    }
 
 }
