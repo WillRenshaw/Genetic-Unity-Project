@@ -5,15 +5,23 @@ using UnityEngine.UI;
 
 
 public class GenerationController : MonoBehaviour {
-	public Generation currentGen;
+	private Generation currentGen;
 	public GameObject ecosystem;
     public Text genUI;
 
+    
     [Range(0f, 100f)]
 	public float simulationLength = 10f;
+
+    [Range(1, 10000)]
+    public int generations = 100;
+
+    [Range(1, 1000)]
+    public int genSize = 50;
+
 	public bool XAxis = false;
 	public bool YAxis = false;
-
+    
 	void StartSimulation(){
         
         foreach (Transform child in this.transform)
@@ -61,12 +69,13 @@ public class GenerationController : MonoBehaviour {
 
         Generation g = new Generation (1);
 
-        Creature c1 = Helper.CreateRandomCreature(1,1);
-        Creature c2 = new Creature("", 1, 2);
+        Creature c1 = new Creature("", 1, 1);
+        Creature c2 = Helper.CreateRandomCreature(1, 2);
 
         g.AppendCreature(c1);
 		g.AppendCreature(c2);
-		for (int i = 0; i < 48; i++) {
+
+		for (int i = 0; i < genSize - 2; i++) {
 			Creature c3 = Helper.MateCreatures (c1, c2, g.GENNUMBER, i + 3);
 			g.AppendCreature(c3);
 		}
@@ -78,40 +87,39 @@ public class GenerationController : MonoBehaviour {
         StartCoroutine (RunSimulation());
 	}
 
-	IEnumerator RunSimulation(){
-		StartSimulation ();
-		yield return new WaitForSeconds (simulationLength);
-		EndSimulation ();
-        currentGen.MarkTested();
-        List<Creature> p = currentGen.GetPopulation();
-        Helper.quicksort (p, 0, p.Count - 1);
-        currentGen.SetPopulation(p);
-        currentGen.MarkSorted();
-        currentGen.calculateStats();
+    IEnumerator RunSimulation()
+    {
+        for (int i = 0; i < generations; i++)
+        {
+            StartSimulation();
+            yield return new WaitForSeconds(simulationLength);
+            EndSimulation();
+            currentGen.MarkTested();
+            List<Creature> p = currentGen.GetPopulation();
+            Helper.quicksort(p, 0, p.Count - 1);
+            p.Reverse();
+            currentGen.SetPopulation(p);
+            currentGen.MarkSorted();
+            currentGen.calculateStats();
 
-        List<Creature> parents = new List<Creature>();
-        p.Reverse();
-        parents.Add(currentGen.GetPopulation()[0]);
-        print(currentGen.GetPopulation()[0].GetFitness());
-        parents.Add(currentGen.GetPopulation()[1]);
-        print(currentGen.GetPopulation()[1].GetFitness());
-        print(currentGen.GetPopulation()[2].GetFitness());
+            List<Creature> parents = new List<Creature>();
 
-        genUI.text = ("Gen: " + (currentGen.GENNUMBER + 1) +"\nPrevious Mean Fitness: " + (int)currentGen.MEANFITNESS);
-        currentGen = CreateNewGeneration(50, parents, currentGen.GENNUMBER + 1);
-        StartCoroutine(RunSimulation());
+            parents.Add(currentGen.GetPopulation()[0]);
+            parents.Add(currentGen.GetPopulation()[1]);
+            parents.Add(currentGen.GetPopulation()[2]);
+
+            genUI.text = ("Gen: " + (currentGen.GENNUMBER + 1) + "\nPrevious Mean Fitness: " + currentGen.MEANFITNESS + "\nPrevious Best: " + currentGen.MAXFITNESS + "\nPrevious Worst: " + currentGen.MINFITNESS);
+            Helper.WriteScores(currentGen.MEANFITNESS, currentGen.MAXFITNESS, currentGen.MINFITNESS);
+            currentGen = CreateNewGeneration(genSize, parents, currentGen.GENNUMBER + 1);
+        }
     }
+
 
     private Generation CreateNewGeneration(int genSize, List<Creature> parents, int genNum)
     {
 
         Generation newGen = new Generation(genNum);
-        if (parents.Count > Mathf.Sqrt(genSize))
-        {
-            Debug.LogError("Number of Parents must be less than the square root of genSize");
-        }
-        else
-        {
+
             while(newGen.GetPopulation().Count < genSize)
             {
                 int i = 0;
@@ -133,7 +141,7 @@ public class GenerationController : MonoBehaviour {
                 tempList.RemoveAt(newGen.GetPopulation().Count - 1);
                 newGen.SetPopulation(tempList);
             }
-        }
+
 
         return newGen;
     }

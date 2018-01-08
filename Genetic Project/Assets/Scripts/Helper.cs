@@ -65,12 +65,29 @@ public static class Helper{
         Debug.Log("Saved Generation " + gen.GENNUMBER  + " to " +  Application.persistentDataPath + "/savedgenerations.gd");
     }
 
-	public static void WriteToFile(string fName, object data){
+	public static void WriteToFile(string fName, object data)
+    {
 		BinaryFormatter bf = new BinaryFormatter();
 		FileStream file = File.Create(Application.persistentDataPath + fName);
 		bf.Serialize(file, data);
 		file.Close();
 	}
+
+    public static void WriteScores(float mean, float best, float worst)
+    {
+        WriteLine(mean.ToString(), Application.dataPath + "/mean.txt");
+        WriteLine(best.ToString(), Application.dataPath + "/best.txt");
+        WriteLine(worst.ToString(), Application.dataPath + "/worst.txt");
+    }
+
+
+    private static void WriteLine(string value, string fName)
+    {
+        StreamWriter writer = new StreamWriter(fName, true);
+        writer.WriteLine(value);
+        writer.Close();
+    }
+
 
     public static void ReadGenerations()
     {

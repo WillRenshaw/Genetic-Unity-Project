@@ -21,10 +21,10 @@ public class Creature{
     }
 
 
-    private Function RHF = new SinWave(1, 1, 0);
-    private Function LHF = new SinWave(1, 1, 0);
-    private Function RKF = new SinWave(1, 1, 0);
-    private Function LKF = new SinWave(1, 1, 0);
+    private Function RHF = new SinWave(30, 1, 0);
+    private Function LHF = new SinWave(30, 1, 0);
+    private Function RKF = new SinWave(10, 1, 0);
+    private Function LKF = new SinWave(10, 1, 0);
 
     private float bodyLength = 5f;
     private float RUpperLegLength = 2f;

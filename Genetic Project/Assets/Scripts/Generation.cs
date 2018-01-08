@@ -23,7 +23,21 @@ public class Generation
             return meanFitness;
         }
     }
+    public float MAXFITNESS
+    {
+        get
+        {
+            return maxFitness;
+        }
+    }
     private float maxFitness = 0; //The maximum fitness in the generation
+    public float MINFITNESS
+    {
+        get
+        {
+            return minFitness;
+        }
+    }
     private float minFitness = 9999; //The minimum fitness in the generation
     private float sdFitness = 0; //The standard deviation of the fitness in the generation
     private bool tested = false; //Has the simulation been run?

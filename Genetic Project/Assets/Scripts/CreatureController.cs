@@ -25,6 +25,7 @@ public class CreatureController : MonoBehaviour {
 
 	public Text tagUI;
 
+    private float startTime;
 
     private bool inverted = false;
     public void BuildCreature()
@@ -83,11 +84,13 @@ public class CreatureController : MonoBehaviour {
 
 	void FixedUpdate(){
 		if (running) {
-			rightHip.transform.localRotation = Quaternion.AngleAxis (genes.GetRHF().GetValue (Time.time), Vector3.forward);
-			leftHip.transform.localRotation = Quaternion.AngleAxis (genes.GetLHF().GetValue (Time.time), Vector3.forward);
-			rightKnee.transform.localRotation = Quaternion.AngleAxis (genes.GetRKF().GetValue (Time.time), Vector3.forward);
-			leftKnee.transform.localRotation = Quaternion.AngleAxis (genes.GetLKF().GetValue (Time.time), Vector3.forward);
-            if(transform.localPosition.y < 0)
+			rightHip.transform.localRotation = Quaternion.AngleAxis (genes.GetRHF().GetValue (Time.time - startTime), Vector3.forward);
+			leftHip.transform.localRotation = Quaternion.AngleAxis (genes.GetLHF().GetValue (Time.time - startTime), Vector3.forward);
+			rightKnee.transform.localRotation = Quaternion.AngleAxis (genes.GetRKF().GetValue (Time.time - startTime), Vector3.forward);
+			leftKnee.transform.localRotation = Quaternion.AngleAxis (genes.GetLKF().GetValue (Time.time - startTime), Vector3.forward);
+
+
+            if (transform.localPosition.y < 0)
             {
                 transform.Translate(new Vector3(0, -(transform.localPosition.y - 3), 0));
                 Debug.Log("Prevented Boundary Movement");
@@ -107,31 +110,25 @@ public class CreatureController : MonoBehaviour {
                 transform.localPosition = new Vector3(0, 0, 0);
                 Debug.Log("Set a position to 0");
             }
-
+            
 
 			genes.SetFitness(0);
-            if (Mathf.Abs(this.transform.rotation.eulerAngles.z) > 90f)
-            {
-                inverted = true;
-            }
             if (testXAxis){
 				genes.SetFitness( genes.GetFitness() + transform.position.x);
 			}
 			if (testYAxis && transform.localPosition.y > maxY) {
 				maxY = transform.localPosition.y;
 			}
-            if (inverted)
-            {
-                genes.SetFitness(genes.GetFitness() * 0.5f);
-            }
 
-            
             genes.SetFitness(genes.GetFitness() + maxY);
 			tagUI.text = genes.NAME + "\nFitness: " + (int)genes.GetFitness();
 		}
 	}
 
 	void Start(){
+        
 		BuildCreature ();
+        startTime = Time.time;
 	}
+
 }
