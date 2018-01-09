@@ -21,6 +21,7 @@ public class CreatureController : MonoBehaviour {
 	public bool testXAxis = false;
 	public bool testYAxis = false;
 
+
 	float maxY = 0f;
 
 	public Text tagUI;
@@ -110,7 +111,11 @@ public class CreatureController : MonoBehaviour {
                 transform.localPosition = new Vector3(0, 0, 0);
                 Debug.Log("Set a position to 0");
             }
-            
+
+            if(this.transform.rotation.eulerAngles.z > 120 && this.transform.rotation.eulerAngles.z < 240)
+            {
+                inverted = true;
+            }
 
 			genes.SetFitness(0);
             if (testXAxis){
@@ -119,6 +124,11 @@ public class CreatureController : MonoBehaviour {
 			if (testYAxis && transform.localPosition.y > maxY) {
 				maxY = transform.localPosition.y;
 			}
+
+            if (inverted)
+            {
+                genes.SetFitness(genes.GetFitness() * 0.5f);
+            }
 
             genes.SetFitness(genes.GetFitness() + maxY);
 			tagUI.text = genes.NAME + "\nFitness: " + (int)genes.GetFitness();

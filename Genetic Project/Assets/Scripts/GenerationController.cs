@@ -56,6 +56,7 @@ public class GenerationController : MonoBehaviour {
 	}
 
 	void Start(){
+
         Helper.userPrefs = new UserPrefs() {
             initialBodyCV = 1,
             furtherBodyCV = 1,
@@ -64,26 +65,13 @@ public class GenerationController : MonoBehaviour {
             ecosystemSpacing = 50,
             varianceMultiplier = 1
 		};
-		Helper.WriteToFile ("/userPrefs.gd", Helper.userPrefs);
-		Helper.userPrefs = (UserPrefs)Helper.ReadData ("/userPrefs.gd");
-
         Generation g = new Generation (1);
 
-        Creature c1 = new Creature("", 1, 1);
-        Creature c2 = Helper.CreateRandomCreature(1, 2);
-
-        g.AppendCreature(c1);
-		g.AppendCreature(c2);
-
-		for (int i = 0; i < genSize - 2; i++) {
-			Creature c3 = Helper.MateCreatures (c1, c2, g.GENNUMBER, i + 3);
-			g.AppendCreature(c3);
-		}
-        
-
-        Helper.WriteGeneration(g);
-        Helper.ReadGenerations();
-        currentGen = Helper.savedGenerations[0];
+        List<Creature> parents = new List<Creature>();
+        parents.Add(new Creature("", 1, 1));
+        parents.Add(Helper.CreateRandomCreature(1, 2));
+        g = CreateNewGeneration(genSize, parents, 1);
+        currentGen = g;
         StartCoroutine (RunSimulation());
 	}
 
@@ -107,7 +95,10 @@ public class GenerationController : MonoBehaviour {
             parents.Add(currentGen.GetPopulation()[0]);
             parents.Add(currentGen.GetPopulation()[1]);
             parents.Add(currentGen.GetPopulation()[2]);
-
+            if (Random.Range(1, 11) == 10) {
+                Debug.Log("Random Seeder Parent Added");
+                parents.Add(Helper.CreateRandomCreature(currentGen.GENNUMBER, 1));
+            }
             genUI.text = ("Gen: " + (currentGen.GENNUMBER + 1) + "\nPrevious Mean Fitness: " + currentGen.MEANFITNESS + "\nPrevious Best: " + currentGen.MAXFITNESS + "\nPrevious Worst: " + currentGen.MINFITNESS);
             Helper.WriteScores(currentGen.MEANFITNESS, currentGen.MAXFITNESS, currentGen.MINFITNESS);
             currentGen = CreateNewGeneration(genSize, parents, currentGen.GENNUMBER + 1);
