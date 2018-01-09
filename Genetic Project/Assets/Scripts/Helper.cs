@@ -229,9 +229,13 @@ public static class Helper{
 [System.Serializable]
 public struct UserPrefs{
 	public double initialBodyCV;
-	public double furtherBodyCV;
 	public double initialFunctionCV;
-	public double furtherFunctionCV;
     public double ecosystemSpacing;
     public double varianceMultiplier;
+}
+
+public struct Coordinate
+{
+    public float x;
+    public float y;
 }

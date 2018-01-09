@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
 
 
 public class GenerationController : MonoBehaviour {
 	private Generation currentGen;
 	public GameObject ecosystem;
     public Text genUI;
+
+
+    private Queue<Coordinate> resultHistory = new Queue<Coordinate>(5);
 
     
     [Range(0f, 100f)]
@@ -20,9 +24,10 @@ public class GenerationController : MonoBehaviour {
     public int genSize = 50;
 
 	public bool XAxis = false;
-	public bool YAxis = false;
     
 	void StartSimulation(){
+
+
         
         foreach (Transform child in this.transform)
         {
@@ -39,7 +44,6 @@ public class GenerationController : MonoBehaviour {
             cc.genes = c;
 			cc.running = true;
 			cc.testXAxis = XAxis;
-			cc.testYAxis = YAxis;
 			i++;
 		}
 	}
@@ -56,24 +60,29 @@ public class GenerationController : MonoBehaviour {
 	}
 
 	void Start(){
-
+        File.Create(Application.dataPath + "/mean.txt").Close();
+        File.Create(Application.dataPath + "/best.txt").Close();
+        File.Create(Application.dataPath + "/worst.txt").Close();
         Helper.userPrefs = new UserPrefs() {
-            initialBodyCV = 1,
-            furtherBodyCV = 1,
-            initialFunctionCV = 1,
-            furtherFunctionCV = 1,
-            ecosystemSpacing = 50,
-            varianceMultiplier = 1
-		};
-        Generation g = new Generation (1);
+             initialBodyCV = 0.5,
+             initialFunctionCV = 0.5,
+             ecosystemSpacing = 50,
+             varianceMultiplier = 1
+         };
+         Generation g = new Generation (1);
 
-        List<Creature> parents = new List<Creature>();
-        parents.Add(new Creature("", 1, 1));
-        parents.Add(Helper.CreateRandomCreature(1, 2));
-        g = CreateNewGeneration(genSize, parents, 1);
-        currentGen = g;
-        StartCoroutine (RunSimulation());
-	}
+         List<Creature> parents = new List<Creature>();
+         parents.Add(new Creature("", 1, 1));
+         parents.Add(Helper.CreateRandomCreature(1, 2));
+         g = CreateNewGeneration(genSize, parents, 1);
+         currentGen = g;
+         StartCoroutine (RunSimulation());
+         
+
+
+
+
+    }
 
     IEnumerator RunSimulation()
     {
@@ -111,29 +120,44 @@ public class GenerationController : MonoBehaviour {
 
         Generation newGen = new Generation(genNum);
 
-            while(newGen.GetPopulation().Count < genSize)
+        while (newGen.GetPopulation().Count < genSize)
+        {
+            int i = 0;
+            foreach (Creature p1 in parents)
             {
-                int i = 0;
-                foreach (Creature p1 in parents)
+                int j = 0;
+                foreach (Creature p2 in parents)
                 {
-                    int j = 0;
-                    foreach (Creature p2 in parents)
-                    {
-                        newGen.AppendCreature(Helper.MateCreatures(p1, p2, genNum, i * j));
-                    }
-                    j++;
+                    newGen.AppendCreature(Helper.MateCreatures(p1, p2, genNum, i * j));
                 }
-                i++;
+                j++;
             }
+            i++;
+        }
 
-            while(newGen.GetPopulation().Count > genSize)
-            {
-                List<Creature> tempList = newGen.GetPopulation();
-                tempList.RemoveAt(newGen.GetPopulation().Count - 1);
-                newGen.SetPopulation(tempList);
-            }
+        while (newGen.GetPopulation().Count > genSize)
+        {
+            List<Creature> tempList = newGen.GetPopulation();
+            tempList.RemoveAt(newGen.GetPopulation().Count - 1);
+            newGen.SetPopulation(tempList);
+        }
 
 
         return newGen;
+    }
+
+    private void UpdateAdaptiveLearning()
+    {
+        Coordinate c = new Coordinate()
+        {
+            x = currentGen.GENNUMBER,
+            y = currentGen.MEANFITNESS
+        };
+        if(currentGen.GENNUMBER > 5)
+        {
+            resultHistory.Dequeue();
+        }
+        resultHistory.Enqueue(c);
+        Helper.CalculateGradient(resultHistory);
     }
 }
