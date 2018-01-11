@@ -11,8 +11,6 @@ public class GenerationController : MonoBehaviour {
     public Text genUI;
 
 
-    private Queue<Coordinate> resultHistory = new Queue<Coordinate>(5);
-
     
     [Range(0f, 100f)]
 	public float simulationLength = 10f;
@@ -60,23 +58,26 @@ public class GenerationController : MonoBehaviour {
 	}
 
 	void Start(){
-        File.Create(Application.dataPath + "/mean.txt").Close();
-        File.Create(Application.dataPath + "/best.txt").Close();
-        File.Create(Application.dataPath + "/worst.txt").Close();
+        Helper.savedGenerations.Clear();
+
+
         Helper.userPrefs = new UserPrefs() {
              initialBodyCV = 0.5,
              initialFunctionCV = 0.5,
              ecosystemSpacing = 50,
              varianceMultiplier = 1
          };
-         Generation g = new Generation (1);
 
-         List<Creature> parents = new List<Creature>();
-         parents.Add(new Creature("", 1, 1));
-         parents.Add(Helper.CreateRandomCreature(1, 2));
-         g = CreateNewGeneration(genSize, parents, 1);
-         currentGen = g;
-         StartCoroutine (RunSimulation());
+        Helper.WriteToFile("userprefs.gd", Helper.userPrefs);
+
+        Generation g = new Generation (1);
+
+        List<Creature> parents = new List<Creature>();
+        parents.Add(new Creature("", 1, 1));
+        parents.Add(Helper.CreateRandomCreature(1, 2));
+        g = CreateNewGeneration(genSize, parents, 1);
+        currentGen = g;
+        StartCoroutine (RunSimulation());
          
 
 
@@ -109,7 +110,8 @@ public class GenerationController : MonoBehaviour {
                 parents.Add(Helper.CreateRandomCreature(currentGen.GENNUMBER, 1));
             }
             genUI.text = ("Gen: " + (currentGen.GENNUMBER + 1) + "\nPrevious Mean Fitness: " + currentGen.MEANFITNESS + "\nPrevious Best: " + currentGen.MAXFITNESS + "\nPrevious Worst: " + currentGen.MINFITNESS);
-            Helper.WriteScores(currentGen.MEANFITNESS, currentGen.MAXFITNESS, currentGen.MINFITNESS);
+            
+            Helper.WriteGeneration(currentGen);
             currentGen = CreateNewGeneration(genSize, parents, currentGen.GENNUMBER + 1);
         }
     }
@@ -119,7 +121,7 @@ public class GenerationController : MonoBehaviour {
     {
 
         Generation newGen = new Generation(genNum);
-
+        newGen.AppendCreature(parents[0]);
         while (newGen.GetPopulation().Count < genSize)
         {
             int i = 0;
@@ -146,18 +148,4 @@ public class GenerationController : MonoBehaviour {
         return newGen;
     }
 
-    private void UpdateAdaptiveLearning()
-    {
-        Coordinate c = new Coordinate()
-        {
-            x = currentGen.GENNUMBER,
-            y = currentGen.MEANFITNESS
-        };
-        if(currentGen.GENNUMBER > 5)
-        {
-            resultHistory.Dequeue();
-        }
-        resultHistory.Enqueue(c);
-        Helper.CalculateGradient(resultHistory);
-    }
 }

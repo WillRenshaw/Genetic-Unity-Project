@@ -57,6 +57,10 @@ public class Generation
         }
     }
 
+    private static List<float> meanScores = new List<float>();
+    private static List<float> bestScores = new List<float>();
+    private static List<float> worstScores = new List<float>();
+
     public Generation(int gNum)
     {
         genNumber = gNum;
@@ -108,5 +112,9 @@ public class Generation
         }
         meanFitness = sumFitness / n;
         sdFitness = Mathf.Sqrt((sumFitnessSquared / n) - Mathf.Pow(meanFitness, 2));
+
+        meanScores.Add(meanFitness);
+        bestScores.Add(maxFitness);
+        worstScores.Add(minFitness);
     }
 }

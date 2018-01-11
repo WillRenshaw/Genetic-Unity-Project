@@ -87,26 +87,7 @@ public class CreatureController : MonoBehaviour {
 			leftKnee.transform.localRotation = Quaternion.AngleAxis (genes.GetLKF().GetValue (Time.time - startTime), Vector3.forward);
 
 
-            if (transform.localPosition.y < 0)
-            {
-                transform.Translate(new Vector3(0, -(transform.localPosition.y - 3), 0));
-                Debug.Log("Prevented Boundary Movement");
-            }
-            else if(transform.localPosition.y > Helper.userPrefs.ecosystemSpacing)
-            {
-                transform.Translate(new Vector3(0, (float)Helper.userPrefs.ecosystemSpacing - transform.localPosition.y - 3, 0));
-                Debug.Log("Prevented Boundary Movement");
-            }
-            if(GetComponent<Rigidbody>().velocity.magnitude > 50)
-            {
-                GetComponent<Rigidbody>().velocity = new Vector3(0,0, 0);
-                Debug.Log("Velocity Set To 0");
-            }
-            if(transform.localPosition.magnitude > 9999)
-            {
-                transform.localPosition = new Vector3(0, 0, 0);
-                Debug.Log("Set a position to 0");
-            }
+
 
             if(this.transform.rotation.eulerAngles.z > 120 && this.transform.rotation.eulerAngles.z < 240)
             {

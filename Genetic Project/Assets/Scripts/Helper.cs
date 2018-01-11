@@ -73,20 +73,20 @@ public static class Helper{
 		file.Close();
 	}
 
-    public static void WriteScores(float mean, float best, float worst)
+    /*public static void WriteScores(float mean, float best, float worst)
     {
         WriteLine(mean.ToString(), Application.dataPath + "/mean.txt");
         WriteLine(best.ToString(), Application.dataPath + "/best.txt");
         WriteLine(worst.ToString(), Application.dataPath + "/worst.txt");
-    }
+    }*/
 
 
-    private static void WriteLine(string value, string fName)
+    /*private static void WriteLine(string value, string fName)
     {
         StreamWriter writer = new StreamWriter(fName, true);
         writer.WriteLine(value);
         writer.Close();
-    }
+    }*/
 
 
     public static void ReadGenerations()
@@ -224,6 +224,7 @@ public static class Helper{
 		child.SetLLowerLegLength(Mathf.Clamp(GaussianSample ((c1.GetLLowerLegLength() + c2.GetLLowerLegLength()) / 2, Mathf.Abs (c1.GetLLowerLegLength() - c2.GetLLowerLegLength())), 0.1f, 3f));
 		return child;
 	}
+
 }
 
 [System.Serializable]
@@ -234,8 +235,3 @@ public struct UserPrefs{
     public double varianceMultiplier;
 }
 
-public struct Coordinate
-{
-    public float x;
-    public float y;
-}
