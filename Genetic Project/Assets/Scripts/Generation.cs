@@ -39,6 +39,13 @@ public class Generation
         }
     }
     private float minFitness = 9999; //The minimum fitness in the generation
+    public float SDFITNESS
+    {
+        get
+        {
+            return sdFitness;
+        }
+    }
     private float sdFitness = 0; //The standard deviation of the fitness in the generation
     private bool tested = false; //Has the simulation been run?
     public bool TESTED
@@ -99,6 +106,9 @@ public class Generation
         foreach (Creature c in population)
         {
             n++;
+			if (c.GetFitness () == float.NaN) {
+				c.SetFitness (0);
+			}
             sumFitness += c.GetFitness();
             sumFitnessSquared += Mathf.Pow(c.GetFitness(), 2);
             if (c.GetFitness() < minFitness)
