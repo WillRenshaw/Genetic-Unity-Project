@@ -58,18 +58,6 @@ public class GenerationController : MonoBehaviour {
 	}
 
 	void Start(){
-        Helper.savedGenerations.Clear();
-
-
-        Helper.userPrefs = new UserPrefs() {
-             initialBodyCV = 0.5,
-             initialFunctionCV = 0.5,
-             ecosystemSpacing = 50,
-             varianceMultiplier = 1
-         };
-
-        Helper.WriteToFile("userprefs.gd", Helper.userPrefs);
-
         Generation g = new Generation (1);
 
         List<Creature> parents = new List<Creature>();
@@ -78,11 +66,6 @@ public class GenerationController : MonoBehaviour {
         g = CreateNewGeneration(genSize, parents, 1);
         currentGen = g;
         StartCoroutine (RunSimulation());
-         
-
-
-
-
     }
 
     IEnumerator RunSimulation()
