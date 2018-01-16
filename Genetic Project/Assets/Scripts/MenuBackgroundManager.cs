@@ -7,14 +7,12 @@ public class MenuBackgroundManager : MonoBehaviour {
     public GameObject creaturePrefab;
     public float delay = 0.1f;
 
-	// Use this for initialization
+
 	void Start () {
         Time.timeScale = 1;
         Time.fixedDeltaTime = 0.02f;
 
-        Helper.userPrefs = (UserPrefs)Helper.ReadData("userprefs.gd");
         StartCoroutine(SpawnCreatures());
-        
 	}
 
 
@@ -28,12 +26,5 @@ public class MenuBackgroundManager : MonoBehaviour {
             c.GetComponent<CreatureController>().running = true;
             yield return new WaitForSeconds(delay);
         }
-
-
     }
-
-    // Update is called once per frame
-    void Update () {
-		
-	}
 }

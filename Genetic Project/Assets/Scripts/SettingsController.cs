@@ -28,7 +28,6 @@ public class SettingsController : MonoBehaviour {
 
             Helper.WriteToFile("userprefs.gd", Helper.userPrefs);
         }
-        print("!!)");
         bodyCV.value = (float)Helper.userPrefs.initialBodyCV;
         functionCV.value = (float)Helper.userPrefs.initialFunctionCV;
         spacing.value = (float)Helper.userPrefs.ecosystemSpacing;

@@ -59,7 +59,24 @@ public class GenerationController : MonoBehaviour {
 
 	void Start(){
         Generation g = new Generation (1);
+        if (File.Exists(Application.persistentDataPath + "userprefs.gd"))
+        {
+            Debug.Log("Read in Existing User Prefs");
+            Helper.userPrefs = (UserPrefs)Helper.ReadData("userprefs.gd");
+        }
+        else
+        {
+            Debug.Log("Deafulted User Prefs");
+            Helper.userPrefs = new UserPrefs()
+            {
+                initialBodyCV = 0.5,
+                initialFunctionCV = 0.5,
+                ecosystemSpacing = 50,
+                varianceMultiplier = 1
+            };
 
+            Helper.WriteToFile("userprefs.gd", Helper.userPrefs);
+        }
         List<Creature> parents = new List<Creature>();
         parents.Add(new Creature("", 1, 1));
         parents.Add(Helper.CreateRandomCreature(1, 2));
