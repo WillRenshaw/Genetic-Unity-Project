@@ -20,10 +20,10 @@ public class ListController : MonoBehaviour {
         contents = input;
         foreach (Generation entry in contents)
         {
-            Transform b = Instantiate(button, transform);
-            b.GetComponentInChildren<Text>().text = entry.GENNUMBER.ToString();
+            Transform but = Instantiate(button, transform);
+            but.GetComponentInChildren<Text>().text = entry.GENNUMBER.ToString();
 
-            b.GetComponent<Button>().onClick.AddListener(delegate { SetStats(entry.GENNUMBER); });
+            but.GetComponent<Button>().onClick.AddListener(delegate { SetStats(entry.GENNUMBER); });
         }
         rect.sizeDelta = new Vector2(500, 100 * transform.childCount);
     }
