@@ -8,12 +8,12 @@ public class SettingsController : MonoBehaviour {
 
     public Slider variance, bodyCV, functionCV, spacing;
 
-    void Start()
+    void OnEnable()
     {
-        if(File.Exists(Application.persistentDataPath + "userprefs.gd"))
+        if(File.Exists(Application.persistentDataPath + "/userprefs.gd"))
         {
-            Debug.Log("Read in Existing User Prefs");
-            Helper.userPrefs = (UserPrefs)Helper.ReadData("userprefs.gd");
+			Debug.Log("Read in Existing User Prefs");
+            Helper.userPrefs = (UserPrefs)Helper.ReadData("/userprefs.gd");
         }
         else
         {
@@ -26,7 +26,7 @@ public class SettingsController : MonoBehaviour {
                 varianceMultiplier = 1
             };
 
-            Helper.WriteToFile("userprefs.gd", Helper.userPrefs);
+            Helper.WriteToFile("/userprefs.gd", Helper.userPrefs);
         }
         bodyCV.value = (float)Helper.userPrefs.initialBodyCV;
         functionCV.value = (float)Helper.userPrefs.initialFunctionCV;
@@ -44,6 +44,6 @@ public class SettingsController : MonoBehaviour {
             varianceMultiplier = variance.value
         };
 
-        Helper.WriteToFile("userprefs.gd", Helper.userPrefs);
+        Helper.WriteToFile("/userprefs.gd", Helper.userPrefs);
     }
 }
