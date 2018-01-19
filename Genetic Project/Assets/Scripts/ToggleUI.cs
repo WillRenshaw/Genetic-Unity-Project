@@ -11,7 +11,7 @@ public class ToggleUI : MonoBehaviour {
         if (UI.activeSelf)
         {
             UI.SetActive(false);
-            print("set " + UI.name + " inactivfe");
+            print("set " + UI.name + " inactive");
         }
         else
         {

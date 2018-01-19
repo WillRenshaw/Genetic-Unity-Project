@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/_REVIEW_.unity
+- path: Assets/_SIMULATION_.unity
   isLoaded: 1
   isActive: 1

@@ -59,6 +59,8 @@ public class GenerationController : MonoBehaviour {
 
 	void Start(){
         Generation g = new Generation (1);
+		Helper.savedGenerations.Clear ();
+
         if (File.Exists(Application.persistentDataPath + "/userprefs.gd"))
         {
             Debug.Log("Read in Existing User Prefs");

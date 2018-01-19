@@ -72,21 +72,7 @@ public static class Helper{
 		bf.Serialize(file, data);
 		file.Close();
 	}
-
-    /*public static void WriteScores(float mean, float best, float worst)
-    {
-        WriteLine(mean.ToString(), Application.dataPath + "/mean.txt");
-        WriteLine(best.ToString(), Application.dataPath + "/best.txt");
-        WriteLine(worst.ToString(), Application.dataPath + "/worst.txt");
-    }*/
-
-
-    /*private static void WriteLine(string value, string fName)
-    {
-        StreamWriter writer = new StreamWriter(fName, true);
-        writer.WriteLine(value);
-        writer.Close();
-    }*/
+		
 
 
     public static void ReadGenerations()

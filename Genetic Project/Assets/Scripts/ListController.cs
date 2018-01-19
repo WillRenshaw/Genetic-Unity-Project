@@ -7,7 +7,7 @@ public class ListController : MonoBehaviour {
 
     private RectTransform rect;
     public Transform button;
-    public Text Stats;
+    public Text stats;
     Generation[] contents;
     // Use this for initialization
     void Start () {
@@ -30,7 +30,7 @@ public class ListController : MonoBehaviour {
 
     public void SetStats(int gen)
     {
-        Stats.text = "Gen: " + contents[gen - 1].GENNUMBER + "\nMean: " + (int)contents[gen - 1].MEANFITNESS + "\nStandard Deviation: " + (int)contents[gen - 1].SDFITNESS + "\nMin Fitness: " + (int)contents[gen - 1].MINFITNESS + "\nMax Fitness: " + (int)contents[gen - 1].MAXFITNESS;
+        stats.text = "Gen: " + contents[gen - 1].GENNUMBER + "\nMean: " + (int)contents[gen - 1].MEANFITNESS + "\nStandard Deviation: " + (int)contents[gen - 1].SDFITNESS + "\nMin Fitness: " + (int)contents[gen - 1].MINFITNESS + "\nMax Fitness: " + (int)contents[gen - 1].MAXFITNESS;
     }
 
 }

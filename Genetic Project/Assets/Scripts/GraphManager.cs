@@ -34,30 +34,30 @@ public class GraphManager : MonoBehaviour {
 
 	public void DrawLines(Generation[] gens){
 		List<Coordinate> coords = new List<Coordinate> ();
-		foreach (Generation gen in gens) {
+		foreach (Generation gen in gens) { //Convert all gens to coordinates
 			coords.Add(new Coordinate(){genNum = gen.GENNUMBER, mean = gen.MEANFITNESS, max = gen.MAXFITNESS, min = gen.MINFITNESS});
 		}
 
-		float xToWorldSpace = maxWidth / coords.Count;
+		float xToWorldSpace = maxWidth / coords.Count; //Constant to convert coordinate x vals to unity world space
 		float maxY = 0;
-		foreach (Coordinate c in coords) {
+		foreach (Coordinate c in coords) { //Find the greatest max value
 			if (c.max > maxY) {
 				maxY = c.max;
 			}
 		}
-		float yToWorldSpace = maxHeight / maxY;
-		meanLine.positionCount = coords.Count;
+		float yToWorldSpace = maxHeight / maxY; //Constant to convert coordinate y vals to unity world space
+		meanLine.positionCount = coords.Count; //Set the size of the position arrays appropriately
 		maxLine.positionCount = coords.Count;
 		minLine.positionCount = coords.Count;
 		foreach (Coordinate c in coords) {
-			if (c.genNum % 5 == 0 || c.genNum == 1) {
+			if (c.genNum % 5 == 0 || c.genNum == 1) { //Place marker tags for every 5th generation
 				Transform tag = Instantiate (lineMarker,transform);
 				tag.transform.position = new Vector3 ((c.genNum - 1) * xToWorldSpace, 0, 0);
 				tag.GetComponentInChildren<Text> ().text = c.genNum.ToString();
 			}
-			meanLine.SetPosition (c.genNum - 1, new Vector3 ((c.genNum - 1) * xToWorldSpace, c.mean * yToWorldSpace, 0));
-			maxLine.SetPosition (c.genNum - 1, new Vector3 ((c.genNum - 1) * xToWorldSpace, c.max * yToWorldSpace, 0));
-			minLine.SetPosition (c.genNum - 1, new Vector3 ((c.genNum - 1) * xToWorldSpace, c.min * yToWorldSpace, 0));
+			meanLine.SetPosition (c.genNum - 1, new Vector3 ((c.genNum - 1) * xToWorldSpace, c.mean * yToWorldSpace, 0)); //Set mean Position
+			maxLine.SetPosition (c.genNum - 1, new Vector3 ((c.genNum - 1) * xToWorldSpace, c.max * yToWorldSpace, 0)); //Set max Position
+			minLine.SetPosition (c.genNum - 1, new Vector3 ((c.genNum - 1) * xToWorldSpace, c.min * yToWorldSpace, 0)); //Set min Position
 
 		}
 	}

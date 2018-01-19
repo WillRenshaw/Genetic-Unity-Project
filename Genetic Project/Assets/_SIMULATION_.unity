@@ -138,7 +138,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 870189289}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 379, y: 290.5, z: 0}
+  m_LocalPosition: {x: 537, y: 302, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1191476412}
@@ -350,7 +350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a9dba647cf58f84bb022b9775bb8af3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetFrameRate: 30
+  targetFrameRate: 22
 --- !u!1 &1191476411
 GameObject:
   m_ObjectHideFlags: 0
@@ -449,7 +449,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1519792064}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -81.25, y: 212.55, z: 0}
+  m_LocalPosition: {x: -239.25, y: 224.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1936827241}
@@ -590,8 +590,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ecosystem: {fileID: 1267672460174238, guid: bf3287e20efef2f4e80457bf4a179651, type: 2}
   genUI: {fileID: 1519792066}
-  simulationLength: 10
-  generations: 100
+  simulationLength: 3
+  generations: 10
   genSize: 50
   XAxis: 1
 --- !u!4 &1793854920
@@ -689,7 +689,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1936827237}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 379, y: 290.5, z: 0}
+  m_LocalPosition: {x: 537, y: 302, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1519792065}
