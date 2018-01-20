@@ -10,18 +10,14 @@ public class GenerationController : MonoBehaviour {
 	public GameObject ecosystem;
     public Text genUI;
 
+	private const int ecosystemSpacing = 50;
 
     
-    [Range(0f, 100f)]
-	public float simulationLength = 10f;
 
-    [Range(1, 10000)]
-    public int generations = 100;
+	private float simulationLength;
+    private int generations;
+    private int genSize;
 
-    [Range(1, 1000)]
-    public int genSize = 50;
-
-	public bool XAxis = false;
     
 	void StartSimulation(){
 
@@ -37,11 +33,10 @@ public class GenerationController : MonoBehaviour {
 			GameObject eco = Instantiate (ecosystem);
 			eco.name = "Ecosystem " + i;
 			eco.transform.parent = this.transform;
-			eco.transform.position = new Vector3(0,i * (float)Helper.userPrefs.ecosystemSpacing,0);
+			eco.transform.position = new Vector3(0,i * ecosystemSpacing,0);
 			CreatureController cc = eco.GetComponentInChildren<CreatureController> ();
             cc.genes = c;
 			cc.running = true;
-			cc.testXAxis = XAxis;
 			i++;
 		}
 	}
@@ -60,7 +55,6 @@ public class GenerationController : MonoBehaviour {
 	void Start(){
         Generation g = new Generation (1);
 		Helper.savedGenerations.Clear ();
-
         if (File.Exists(Application.persistentDataPath + "/userprefs.gd"))
         {
             Debug.Log("Read in Existing User Prefs");
@@ -69,16 +63,20 @@ public class GenerationController : MonoBehaviour {
         else
         {
             Debug.Log("Deafulted User Prefs");
-            Helper.userPrefs = new UserPrefs()
-            {
-                initialBodyCV = 0.5,
-                initialFunctionCV = 0.5,
-                ecosystemSpacing = 50,
-                varianceMultiplier = 1
-            };
-
+			Helper.userPrefs = new UserPrefs()
+			{
+				initialBodyCV = 0.5,
+				initialFunctionCV = 0.5,
+				varianceMultiplier = 1,
+				simulationLength = 10,
+				generationSize = 50,
+				iterationCount = 100
+			};
             Helper.WriteToFile("/userprefs.gd", Helper.userPrefs);
         }
+		simulationLength = (float)Helper.userPrefs.simulationLength;
+		generations = Helper.userPrefs.iterationCount;
+		genSize = Helper.userPrefs.generationSize;
         List<Creature> parents = new List<Creature>();
         parents.Add(new Creature("", 1, 1));
         parents.Add(Helper.CreateRandomCreature(1, 2));

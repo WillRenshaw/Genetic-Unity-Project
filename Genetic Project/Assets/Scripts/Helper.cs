@@ -217,7 +217,9 @@ public static class Helper{
 public struct UserPrefs{
 	public double initialBodyCV;
 	public double initialFunctionCV;
-    public double ecosystemSpacing;
     public double varianceMultiplier;
+	public int iterationCount;
+	public int generationSize;
+	public double simulationLength;
 }
 

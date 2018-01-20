@@ -18,7 +18,6 @@ public class CreatureController : MonoBehaviour {
     GameObject leftKnee;
 
 	public bool running = false;
-	public bool testXAxis = false;
 
 	public Text tagUI;
 
@@ -95,9 +94,8 @@ public class CreatureController : MonoBehaviour {
             }
 
 			genes.SetFitness(0);
-            if (testXAxis){
-				genes.SetFitness( genes.GetFitness() + transform.position.x);
-			}
+
+			genes.SetFitness( genes.GetFitness() + transform.position.x);
 
 
             if (inverted)

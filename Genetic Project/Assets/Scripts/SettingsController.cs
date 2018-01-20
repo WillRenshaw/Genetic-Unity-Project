@@ -6,7 +6,8 @@ using System.IO;
 
 public class SettingsController : MonoBehaviour {
 
-    public Slider variance, bodyCV, functionCV, spacing;
+    public Slider variance, bodyCV, functionCV, iteration, size, length;
+	public Text varianceVal, bodyVal, functionVal, iterationVal, sizeVal, lengthVal;
 
     void OnEnable()
     {
@@ -22,16 +23,20 @@ public class SettingsController : MonoBehaviour {
             {
                 initialBodyCV = 0.5,
                 initialFunctionCV = 0.5,
-                ecosystemSpacing = 50,
-                varianceMultiplier = 1
+                varianceMultiplier = 1,
+				simulationLength = 10,
+				generationSize = 50,
+				iterationCount = 100
             };
 
             Helper.WriteToFile("/userprefs.gd", Helper.userPrefs);
         }
         bodyCV.value = (float)Helper.userPrefs.initialBodyCV;
         functionCV.value = (float)Helper.userPrefs.initialFunctionCV;
-        spacing.value = (float)Helper.userPrefs.ecosystemSpacing;
         variance.value = (float)Helper.userPrefs.varianceMultiplier;
+		iteration.value = Helper.userPrefs.iterationCount;
+		size.value = Helper.userPrefs.generationSize;
+		length.value = (float)Helper.userPrefs.simulationLength;
     }
 
 	public void updateUserPrefs()
@@ -40,10 +45,22 @@ public class SettingsController : MonoBehaviour {
         {
             initialBodyCV = bodyCV.value,
             initialFunctionCV = functionCV.value,
-            ecosystemSpacing = spacing.value,
-            varianceMultiplier = variance.value
+			varianceMultiplier = variance.value,
+			iterationCount = (int)iteration.value,
+			generationSize = (int)size.value,
+			simulationLength = (double)length.value
+
         };
 
         Helper.WriteToFile("/userprefs.gd", Helper.userPrefs);
     }
+
+	public void Update(){
+		varianceVal.text = variance.value.ToString();
+		bodyVal.text = bodyCV.value.ToString();
+		functionVal.text = functionCV.value.ToString();
+		iterationVal.text = iteration.value.ToString();
+		sizeVal.text = size.value.ToString();
+		lengthVal.text = length.value.ToString();
+	}
 }
