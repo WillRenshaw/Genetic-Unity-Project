@@ -350,7 +350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a9dba647cf58f84bb022b9775bb8af3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetFrameRate: 22
+  targetFrameRate: 20
 --- !u!1 &1191476411
 GameObject:
   m_ObjectHideFlags: 0
@@ -590,10 +590,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ecosystem: {fileID: 1267672460174238, guid: bf3287e20efef2f4e80457bf4a179651, type: 2}
   genUI: {fileID: 1519792066}
-  simulationLength: 3
-  generations: 10
+  simulationLength: 5
+  generations: 500
   genSize: 50
-  XAxis: 1
 --- !u!4 &1793854920
 Transform:
   m_ObjectHideFlags: 0
