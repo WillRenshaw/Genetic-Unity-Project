@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GraphManager : MonoBehaviour {
 
-	public Transform linePrefab;
+	public Transform linePrefab; //Prefabs for the lineRenderer and marker
 	public Transform lineMarker;
     private LineRenderer meanLine;
 	private LineRenderer maxLine;
@@ -14,6 +14,7 @@ public class GraphManager : MonoBehaviour {
 
 	void Start()
 	{
+		//Create the three lines and assign to appropriate variables
 		meanLine = Instantiate (linePrefab, transform).GetComponent<LineRenderer> ();
 		meanLine.gameObject.name = "Mean";
 		meanLine.startColor = Color.red;
@@ -26,10 +27,14 @@ public class GraphManager : MonoBehaviour {
 		minLine.gameObject.name = "Min";
 		minLine.startColor = Color.green;
 		minLine.endColor = Color.green;
+		//Calls drawLines with the most recent test results
 		DrawLines (Helper.savedGenerations.ToArray ());
 	}
 
-
+	/// <summary>
+	/// Draws the graph lines
+	/// </summary>
+	/// <param name="gens">The results to draw</param>
 	public void DrawLines(Generation[] gens){
 		List<Coordinate> coords = new List<Coordinate> ();
 		foreach (Generation gen in gens) { //Convert all gens to coordinates
@@ -60,6 +65,9 @@ public class GraphManager : MonoBehaviour {
 
   
 }
+/// <summary>
+/// Coordinate
+/// </summary>
 public struct Coordinate
 {
 	public int genNum;

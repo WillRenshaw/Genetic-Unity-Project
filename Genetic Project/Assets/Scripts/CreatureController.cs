@@ -5,25 +5,26 @@ using UnityEngine.UI;
 
 public class CreatureController : MonoBehaviour {
 
-    public Creature genes;
-    public GameObject bodyPreset;
+    public Creature genes; //The Creature that is to be tested
+    public GameObject bodyPreset; //Presets that are assigned in inspector
     public GameObject rightPreset;
     public GameObject leftPreset;
+	public Text tagUI; //The text used to display name and fitness
 
+    const float jointOffset = 0.2f; //Offset used for joints
+    
+	private GameObject rightHip; //The joint gameobjects that get rotated
+    private GameObject leftHip;
+    private GameObject rightKnee;
+    private GameObject leftKnee;
 
-    const float jointOffset = 0.2f;
-    GameObject rightHip;
-    GameObject leftHip;
-    GameObject rightKnee;
-    GameObject leftKnee;
+	private bool running = false; //Is simulation running?
+    private float startTime; //The start time of the simulation
+    private bool inverted = false; //Has the creature been inverted?
 
-	public bool running = false;
-
-	public Text tagUI;
-
-    private float startTime;
-
-    private bool inverted = false;
+	/// <summary>
+	/// Builds the creature.
+	/// </summary>
     public void BuildCreature()
     {
         //CreateBody
@@ -79,7 +80,8 @@ public class CreatureController : MonoBehaviour {
 		
 
 	void FixedUpdate(){
-		if (running) {
+		if (running) { //Checks if running
+			//Rotates joints
 			rightHip.transform.localRotation = Quaternion.AngleAxis (genes.GetRHF().GetValue (Time.time - startTime), Vector3.forward);
 			leftHip.transform.localRotation = Quaternion.AngleAxis (genes.GetLHF().GetValue (Time.time - startTime), Vector3.forward);
 			rightKnee.transform.localRotation = Quaternion.AngleAxis (genes.GetRKF().GetValue (Time.time - startTime), Vector3.forward);
@@ -87,30 +89,35 @@ public class CreatureController : MonoBehaviour {
 
 
 
-
+			//Checks is body is between 120 and 240 degrees, if it is, sets inverted to true
             if(this.transform.rotation.eulerAngles.z > 120 && this.transform.rotation.eulerAngles.z < 240)
             {
                 inverted = true;
             }
 
-			genes.SetFitness(0);
-
+			genes.SetFitness(0); //Resets fitness
+			//Sets fitness to x position
 			genes.SetFitness( genes.GetFitness() + transform.position.x);
 
 
+			//If creature is inverted halves fitness
             if (inverted)
             {
                 genes.SetFitness(genes.GetFitness() * 0.5f);
             }
 
+			//Sets tag to display name and fitness
 			tagUI.text = genes.NAME + "\nFitness: " + (int)genes.GetFitness();
 		}
 	}
 
 	void Start(){
-        
-		BuildCreature ();
-        startTime = Time.time;
+		BuildCreature (); //Creature is built when creature controller is created
+        startTime = Time.time; //Gets start time
+	}
+
+	public void Run(bool r){
+		running = r;
 	}
 
 }

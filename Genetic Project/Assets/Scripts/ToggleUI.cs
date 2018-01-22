@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class ToggleUI : MonoBehaviour {
 
-    public GameObject UI;
+    public GameObject UI; //The UI to toggle
 
     public void Toggle()
-    {
+    { //toggles the given UI fbetween active and inactive
         if (UI.activeSelf)
         {
             UI.SetActive(false);

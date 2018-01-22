@@ -4,24 +4,21 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour {
 
-	private float moveSpeed;
-	private float originalSize;
-	Camera c;
+	private float moveSpeed; //The speed the camera should moce at
+	private float originalSize; //The size the camera is at the start
+	Camera c; //Reference to the camera
 
-	// Use this for initialization
 	void Start () {
-		c = GetComponent<Camera> ();
-		originalSize = c.orthographicSize;
+		c = GetComponent<Camera> (); //Gets the reference to the camera
+		originalSize = c.orthographicSize; //Gets the size of the camera at startup
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
-		moveSpeed =  c.orthographicSize / originalSize;
+		moveSpeed =  c.orthographicSize / originalSize; //Movespeed is proportional to the size compared to the original
 
-		transform.Translate(new Vector3(Input.GetAxisRaw("Horizontal") * moveSpeed, Input.GetAxisRaw("Vertical") * moveSpeed, 0));
-		if(Input.GetAxisRaw("Mouse ScrollWheel") !=0){
-			c.orthographicSize -= 20 * Input.GetAxisRaw("Mouse ScrollWheel");
+		transform.Translate(new Vector3(Input.GetAxisRaw("Horizontal") * moveSpeed, Input.GetAxisRaw("Vertical") * moveSpeed, 0)); //Move the camera based on user inputs
+		if(Input.GetAxisRaw("Mouse ScrollWheel") !=0){ //Checks is mouse scroll wheel is being used
+			c.orthographicSize -= 20 * Input.GetAxisRaw("Mouse ScrollWheel"); //Adjusts size of camera based on mouse wheel
 		}
-
 	}
 }

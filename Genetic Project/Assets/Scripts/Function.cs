@@ -4,9 +4,9 @@ using UnityEngine;
 [System.Serializable]
 public class Function {
 
-    protected float amplitude;
-    protected float wavelength;
-    protected float phase;
+    protected float amplitude; //Amplitude of function
+    protected float wavelength; //Wavelength of function
+    protected float phase; //Phase of function
 
     /// <summary>
     /// Define A New Function
@@ -21,11 +21,17 @@ public class Function {
 		phase = pha;
     }
 
+	/// <summary>
+	/// Fetch the value of the function at time t
+	/// </summary>
+	/// <returns>Value of the function at time t</returns>
+	/// <param name="t">Time</param>
     public virtual float GetValue(float t)
     {
         return 0;
     }
 
+	//Getters for amplitude, wavelength and phase
 	public float GetAmplitude(){
 		return amplitude;
 	}
