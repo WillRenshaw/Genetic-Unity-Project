@@ -13,6 +13,7 @@ public class ListController : MonoBehaviour {
 
     void Start () {
         rect = GetComponent<RectTransform>(); //Get reference to transform
+		Helper.ReadGenerations();
         SetGeneration(Helper.savedGenerations.ToArray());
 	}
 	
